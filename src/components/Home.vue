@@ -19,7 +19,7 @@
             Content
         },
         data () {
-          
+          return {}
         } 
     }
 </script>

@@ -28,9 +28,20 @@
             <a class="nav-link" href="http://pansf.panmedia.asia/6">聯繫總部</a>
           </li>
         </ul>
-        <a class="btn navbar-btn ml-2 text-white btn-primary" data-toggle="modal" data-target="#mode_loign_reg">註冊 / 登入&nbsp;
+        <a class="btn navbar-btn ml-2 text-white btn-primary login-btn" data-toggle="modal" data-target="#mode_loign_reg">註冊 / 登入&nbsp;
           <i class="fa d-inline fa-lg fa-user-circle-o"></i>
         </a>
+          <div class="btn-group" style="display: none;">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> {{ nickname }}&nbsp;
+              <i class="fa d-inline fa-lg fa-user-circle-o"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="myfile.html">個人資料</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">登出</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -38,6 +49,18 @@
 
 <script>
   export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    data(){
+      return {
+        nickname: ''
+      }
+    },
+    created() {
+      this.$bus.$on('login_access', (msg) => {
+        $('.btn-group').show()
+        $('.login-btn').hide()
+        this.nickname = msg.body.user.nickname
+      });
+    }
   }
 </script>
