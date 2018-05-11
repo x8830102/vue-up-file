@@ -211,11 +211,23 @@
           if( response.status === 'connected' ) {
             this.FB_login_item.access_token = response.authResponse.accessToken;
           }
-          this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then(
-            response => {
-              console.log(response);
-            }
-          )
+          this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( response => {
+            this.show = false;
+            //get member profile
+            this.$http.get(
+              'http://dev.members.panmedia.asia/api/v1/profile',
+              { headers: {
+                  Authorization: 'Bearer ' + response.body.message.access_token
+                }
+              }
+            ).then( res => {
+              this.$bus.$emit('login_access',res)
+            })
+          },function(error) {
+            console.log(error)
+            this.alert_text = '帳號密碼錯誤';
+            this.show = true;
+          })
         }, {scope: 'public_profile,email'})
       }
     }

@@ -38,7 +38,7 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" href="myfile.html">個人資料</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">登出</a>
+              <a class="dropdown-item" href="#" @click="logout">登出</a>
             </div>
           </div>
         </div>
@@ -57,10 +57,23 @@
     },
     created() {
       this.$bus.$on('login_access', (msg) => {
+        let expireDays = 1000 * 60 * 60 * 24 * 15;
+        this.setCookie('username', msg.body.user.nickname, expireDays);
+        location.reload() 
+      });
+    },
+    mounted() {
+      if( this.getCookie('username') != null ) {
         $('.btn-group').show()
         $('.login-btn').hide()
-        this.nickname = msg.body.user.nickname
-      });
+        this.nickname = unescape(this.getCookie('username'))
+      }
+    },
+    methods:{
+      logout() {
+        this.delCookie('username')
+        location.reload() 
+      }
     }
   }
 </script>
