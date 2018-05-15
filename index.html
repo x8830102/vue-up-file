@@ -10,8 +10,10 @@
     <div id="app"></div>
 
     <script src="dist/build.js"></script>
-    <!--FB SDK-->
+    <script src="https://apis.google.com/js/api:client.js"></script>
+
     <script>
+      //FB SDK
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '138399296799412',
@@ -29,7 +31,8 @@
         js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.10&appId=138399296799412&autoLogAppEvents=1';
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
+      //FN SDK end
+
     </script>
-    <!--end-->
   </body>
 </html>

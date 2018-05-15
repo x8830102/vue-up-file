@@ -28,7 +28,7 @@
             <a class="nav-link" href="http://pansf.panmedia.asia/6">聯繫總部</a>
           </li>
         </ul>
-        <a class="btn navbar-btn ml-2 text-white btn-primary login-btn" data-toggle="modal" data-target="#mode_loign_reg">註冊 / 登入&nbsp;
+        <a class="btn navbar-btn ml-2 text-white btn-primary login-btn" data-toggle="modal" data-target="#mode_login">註冊 / 登入&nbsp;
           <i class="fa d-inline fa-lg fa-user-circle-o"></i>
         </a>
           <div class="btn-group" style="display: none;">

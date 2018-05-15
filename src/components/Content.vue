@@ -68,7 +68,7 @@
     </div>
     <div class="py-5 bg-secondary"></div>
     <!--登入-->
-    <div class="modal fade" id="mode_loign_reg">
+    <div class="modal fade" id="mode_login">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -81,78 +81,52 @@
           </div>
           <div class="modal-body text-center">
             <transition>
-              <div class="alert alert-danger" role="alert" v-if="show">
+              <div class="alert alert-danger" role="alert" v-if="error_show">
                 {{ alert_text }}
               </div>
             </transition>
-            <div class="form-check mt-2 form-check-inline form-control-lg" id="login">
-              <input class="form-check-input" type="radio" id="exampleCheck1" value="on" checked="checked">
-              <label class="form-check-label" for="exampleCheck1">登入</label>
-            </div>
-            <div class="form-check mt-2 form-control-lg d-inline-flex" id="reg">
-              <input class="form-check-input" type="radio" id="exampleCheck1" value="on" name="mode">
-              <label class="form-check-label" for="exampleCheck1">註冊</label>
+            <div class="form-check mt-2 form-check-inline form-control-lg">
+              <ul>
+                <li>
+                  <input class="form-check-input" type="radio" id="login" value="on" checked="checked" name="mode">
+                  <label class="form-check-label" for="login" @click="redio_toggle('login')">登入</label>
+                </li>
+                <li>
+                  <input class="form-check-input" type="radio" id="reg" value="on" name="mode">
+                  <label class="form-check-label" for="reg" @click="redio_toggle('reg')">註冊</label>
+                </li>
+              </ul>
             </div>
             <div class="card-body">
-              <form>
+              <form id="login_form">
                 <div class="form-group">
                   <input type="text" v-model:value="pm_login_item.identifier" class="form-control" placeholder="* 帳號 或 E-mail"> </div>
                 <div class="form-group">
                   <input type="password" v-model:value="pm_login_item.password" class="form-control" placeholder="* 密碼"> </div>
                 <button type="button"  @click="pm_login" class="btn btn-block btn-primary">登入</button>
               </form>
+              <form id="reg_form">
+                <div class="form-group">
+                  <input type="email" v-model:value="register_item.email" class="form-control" placeholder="* E-mail"> </div>
+                <div class="form-group">
+                  <input type="password" v-model:value="register_item.password" class="form-control" placeholder="* 密碼"> </div>
+                <div class="form-group">
+                  <input type="password" v-model:value="register_item.password2" class="form-control" placeholder="* 再次輸入密碼"> </div>
+                <button type="submit" @click="register" class="btn btn-block btn-primary">註冊</button>
+              </form>
               <ul class="list-inline">
-                <li class="list-inline-item text-primary text-right">忘記密碼？&nbsp;</li>
-                <li class="list-inline-item text-primary">重寄 E-mail 確認信</li>
-                <hr> </ul>
+                <a href="https://members.panmedia.asia/reset_password" target="_blank">
+                  <li class="list-inline-item text-primary text-right">忘記密碼？&nbsp;</li>
+                </a>
+                <a href="https://members.panmedia.asia/resend_activity_mail" target="_blank">
+                  <li class="list-inline-item text-primary">重寄 E-mail 確認信</li>
+                </a>
+                
+              <hr> </ul>
               <p class="text-center">或</p>
               <a class="btn navbar-btn ml-2 text-white btn-secondary btn-block"  @click="FB_login">
                 <i class="fa fa-fw fa-facebook mx-3" ></i>Facebook 登入&nbsp; </a>
-              <a class="btn navbar-btn ml-2 text-white btn-danger btn-block">
-                <i class="fa fa-fw fa-google mx-3"></i>Google 登入&nbsp; </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--end-->
-    <!--註冊-->
-    <div class="modal fade" id="mode_loign_reg">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">
-              <b>泛科幻獎</b>
-            </h3>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body text-center">
-            <div class="form-check mt-2 form-control-lg d-inline-flex" id="login">
-              <input class="form-check-input" type="radio" id="exampleCheck1" value="on" name="mode">
-              <label class="form-check-label" for="exampleCheck1">登入</label>
-            </div>
-            <div class="form-check mt-2 form-check-inline form-control-lg" id="reg">
-              <input class="form-check-input" type="radio" id="exampleCheck1" value="on" checked="checked">
-              <label class="form-check-label" for="exampleCheck1">註冊</label>
-            </div>
-            <div class="card-body">
-              <form>
-                <div class="form-group">
-                  <input type="email" class="form-control" placeholder="* E-mail"> </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" placeholder="* 密碼"> </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" placeholder="* 再次輸入密碼"> </div>
-                <button type="submit" class="btn btn-block btn-primary">註冊</button>
-              </form>
-              <hr>
-              <p class="text-center">或</p>
-              <a class="btn navbar-btn ml-2 text-white btn-secondary btn-block">
-                <i class="fa fa-fw fa-facebook mx-3"></i>Facebook 登入&nbsp; </a>
-
-              <a class="btn navbar-btn ml-2 text-white btn-danger btn-block btn-sm">
+              <a class="btn navbar-btn ml-2 text-white btn-danger btn-block" ref="google_login" @click="Google_login">
                 <i class="fa fa-fw fa-google mx-3"></i>Google 登入&nbsp; </a>
             </div>
           </div>
@@ -173,7 +147,7 @@
     data(){
       return {
         alert_text: '',
-        show: false,
+        error_show: false,
         pm_login_item: {
           client_id: '5843717039843802',
           identifier: '',
@@ -183,27 +157,38 @@
           provider: 'facebook',
           client_id: '5843717039843802',
           access_token: ''
+        },
+        Google_login_item:{
+          provider: 'google',
+          client_id: '5843717039843802',
+          access_token: ''
+        },
+        register_item: {
+          client_id: '5843717039843802',
+          email: '',
+          password: '',
+          password2: ''
         }
       } 
     },
     methods:{
       pm_login() {
-        this.$http.post('http://dev.members.panmedia.asia/api/server/login',this.pm_login_item).then( response => {
-          this.show = false;
+        this.$http.post('http://dev.members.panmedia.asia/api/server/login',this.pm_login_item).then( access => {
+          this.error_show = false;
           //get member profile
           this.$http.get(
             'http://dev.members.panmedia.asia/api/v1/profile',
             { headers: {
-                Authorization: 'Bearer ' + response.body.message.access_token
+                Authorization: 'Bearer ' + access.body.message.access_token
               }
             }
           ).then( res => {
             this.$bus.$emit('login_access',res)
           })
-        },function(error) {
+        },error => {
           console.log(error)
-          this.alert_text = '帳號密碼錯誤';
-          this.show = true;
+          this.alert_text = '帳號密碼錯誤。';
+          this.error_show = true;
         })
       },
       FB_login() {
@@ -211,29 +196,88 @@
           if( response.status === 'connected' ) {
             this.FB_login_item.access_token = response.authResponse.accessToken;
           }
-          this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( response => {
-            this.show = false;
+          this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( access => {
+            this.error_show = false;
             //get member profile
             this.$http.get(
               'http://dev.members.panmedia.asia/api/v1/profile',
               { headers: {
-                  Authorization: 'Bearer ' + response.body.message.access_token
+                  Authorization: 'Bearer ' + access.body.message.access_token
                 }
               }
             ).then( res => {
               this.$bus.$emit('login_access',res)
             })
-          },function(error) {
+          },error => {
             console.log(error)
-            this.alert_text = '帳號密碼錯誤';
-            this.show = true;
+            this.alert_text = '帳號密碼錯誤。';
+            this.error_show = true;
           })
         }, {scope: 'public_profile,email'})
+      },
+      Google_login() {
+        window.gapi.load('auth2', () => {
+          const auth2 = window.gapi.auth2.init({
+            client_id: '393700711226-fdqbk2nh32772iadtpbp678m5bo92hd0.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin'
+          })
+          auth2.attachClickHandler(this.$refs.google_login, {}, googleUser => {
+            this.Google_login_item.access_token = googleUser.getAuthResponse().id_token;
+            this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/google',this.Google_login_item).then( access => {
+
+            this.error_show = false;
+            //get member profile
+            this.$http.get(
+              'http://dev.members.panmedia.asia/api/v1/profile',
+              { headers: {
+                  Authorization: 'Bearer ' + access.body.message.access_token
+                }
+              }
+              ).then( res => {
+                this.$bus.$emit('login_access',res)
+              })
+            },error =>{
+              console.log(error)
+              this.alert_text = '帳號密碼錯誤。';
+              this.error_show = true;
+            })
+          }, error => console.log(error))
+        })
+      },
+      redio_toggle(value) {
+        if( value === 'reg' ) {
+          $('#login_form').hide();
+          $('#reg_form').show();
+        } else if ( value === 'login' ) {
+          $('#login_form').show();
+          $('#reg_form').hide();
+        }
+      },
+      register() {
+        if( this.register_item.password != this.register_item.password2 ){
+          this.alert_text = '密碼不相同。';
+          this.error_show = true;
+        }
+
+        this.$http.post('http://dev.members.panmedia.asia/api/server/register',this.register_item).then( access => {
+          alert('註冊完成，請前往收信。')
+        },error => {
+          if( error.body.code == 45 ) {
+            this.alert_text = '信箱格式錯誤。';
+            this.error_show = true;
+          }
+        })
       }
     }
   }
 </script>
 <style>
+li { display: inline-block; }
+
+#reg_form{
+  display: none;
+}
+
 .v-leave {
   opacity: 1;
 }

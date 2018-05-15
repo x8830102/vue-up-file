@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Vueresource from 'vue-resource'
-
+import router from './router'
 import "jquery"
 import "bootstrap"
 
 Vue.use(Vueresource)
+
 //global event bus
 const EventBus = new Vue()
 Object.defineProperties(Vue.prototype, {
@@ -15,6 +16,7 @@ Object.defineProperties(Vue.prototype, {
         }
     }
 })
+//global event bus End
 //设置cookie
 Vue.prototype.setCookie = (c_name, value, expiredays) => {
   var exdate = new Date();　　　　
@@ -38,7 +40,10 @@ Vue.prototype.delCookie =(name) => {
     if (cval != null)
       document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
+
 new Vue({
   el: '#app',
+  router: router,
+  template: '<App/>',
   render: h => h(App)
 })
