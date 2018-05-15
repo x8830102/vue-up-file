@@ -54,7 +54,7 @@
           <div class="col-md-4 offset-md-2 text-center">
             <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_1_active.png" width="100px" height="100px">
             <div class="col-md-12 p-5">
-              <a href="myfile.html" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </a>
+              <p href="#" @click="checked_login"  data-toggle="modal" data-target="#mode_login" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </p>
             </div>
           </div>
           <div class="col-md-4">
@@ -267,6 +267,13 @@
             this.error_show = true;
           }
         })
+      },
+      checked_login(){
+        if( this.getCookie('username') != null ) {
+          window.location = '/panmedia/panscifi-dev/adminlogin';
+        } else {
+          
+        }
       }
     }
   }
