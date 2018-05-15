@@ -7,7 +7,8 @@ import Admin from './components/Admin.vue'
 
 Vue.use(router);
 export default new router({
-    mode:'history',
+    mode: 'history',
+    base: '/panmedia/panscifi-dev',
     routes:[
         {
             path: '/',
