@@ -271,8 +271,6 @@
       checked_login(){
         if( this.getCookie('username') != null ) {
           window.location = '/panmedia/panscifi-dev/adminlogin';
-        } else {
-          
         }
       }
     }
