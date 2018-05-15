@@ -52,13 +52,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 offset-md-2 text-center">
-            <img class="img-fluid d-block rounded-circle mx-auto" src="dist/assets/icon_1_active.png" width="100px" height="100px">
+            <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_1_active.png" width="100px" height="100px">
             <div class="col-md-12 p-5">
               <a href="myfile.html" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </a>
             </div>
           </div>
           <div class="col-md-4">
-            <img class="img-fluid d-block rounded-circle mx-auto" src="dist/assets/icon_2_active.png" width="100px" height="100px">
+            <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_2_active.png" width="100px" height="100px">
             <div class="col-md-12 text-center p-5">
               <a href="upload.html" class="btn btn-lg m-0 btn-outline-light">STEP 2：作品上傳 </a>
             </div>

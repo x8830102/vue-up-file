@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <img class="img-fluid d-block mx-auto" src="dist/assets/panscifi_logo.png" width="333px" height="100px"> 
+          <img class="img-fluid d-block mx-auto" src="dist/image/panscifi_logo.png" width="333px" height="100px"> 
         </div>
       </div>
     </div>
