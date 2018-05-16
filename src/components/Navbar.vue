@@ -19,7 +19,7 @@
             <a class="nav-link" href="http://pansf.panmedia.asia/4">徵文與活動報名</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="pansf_upload.html">作品上傳</a>
+            <a class="nav-link active" href="/">作品上傳</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://pansf.panmedia.asia/5">合作夥伴</a>
@@ -72,7 +72,7 @@
     methods:{
       logout() {
         this.delCookie('username')
-        location.reload() 
+        window.location = '/';
       }
     }
   }

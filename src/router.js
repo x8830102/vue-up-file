@@ -4,6 +4,8 @@ import router from 'vue-router'
 import Home from './components/Home.vue'
 import AdminLogin from './components/AdminLogin.vue'
 import Admin from './components/Admin.vue'
+import Upload from './components/Upload.vue'
+import Myfile from './components/Myfile.vue'
 
 Vue.use(router);
 export default new router({
@@ -21,9 +23,19 @@ export default new router({
             component: AdminLogin,
         },
         {
-            path:'/admin',
+            path: '/admin',
             name: 'admin',
             component: Admin
+        },
+        {
+            path: '/upfile',
+            name: 'upload',
+            component: Upload
+        },
+        {
+            path: '/myfile',
+            name: 'myfile',
+            component: Myfile
         }
     ]
 
