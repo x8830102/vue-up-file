@@ -24,7 +24,7 @@ class Member extends CI_Controller {
 				{
 					$data_update = array();
 					$data_update['name'] = $this->input->post('name', true);
-					$data_update['pan_name	'] = $this->input->post('pan_name	', true);
+					$data_update['pan_name'] = $this->input->post('pan_name', true);
 					$data_update['phone'] = $this->input->post('phone', true);
 					$data_update['admin'] = $this->input->post('admin', true);
 					if($this->member_data->update_row_by_sn($member['sn'], $data_update))
