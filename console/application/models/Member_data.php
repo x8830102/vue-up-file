@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 /*
-* 使用者 Model，負責管理人員登入!
 */
 
 class Member_data extends CI_Model{
@@ -47,10 +46,6 @@ class Member_data extends CI_Model{
         {
             $update_where = array();
             $update_where['sn'] = $sn;
-            if(isset($data_update['password']))
-            {
-                $data_update['password'] = $this->lib_user->encrypt_password($data_update['password']);
-            }
             return $this->db->update('pansf2018_member_data', $data_update, $update_where);
         }
     }

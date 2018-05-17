@@ -83,6 +83,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+
+	<form method="post" enctype="multipart/form-data">
+		<div>
+			<label for="file">Choose file to upload</label>
+			<input type="file" id="novel" name="novel">
+			<input type="text" name="email">
+		</div>
+ 	<div>
+   	<button>Submit</button>
+ </div>
+</form>
 </div>
 
 </body>
