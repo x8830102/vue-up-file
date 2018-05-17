@@ -10,3 +10,6 @@ yarn-error.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# CI framework
+console/index.php
