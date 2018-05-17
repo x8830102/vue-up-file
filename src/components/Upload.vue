@@ -1,16 +1,7 @@
 <template>
-  <div class="container">
+  <div>
     <Header></Header>
     <Navbar></Navbar>
-    <div class="p-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="p-0 m-5"></div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="modal" id="short">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -61,33 +52,27 @@
               <span>×</span>
             </button>
           </div>
-          <form>
+          <form  @submit.prevent="submit" name="novella_form" id="novella_form">
             <div class="card-block p-5">
               <label for="exampleInputEmail1" class="text-dark">
                 <b>
                   <b>上傳作品</b>
                 </b> (檔案大小不得超過 10 MB)
               </label>
-              <form @submit.prevent="submit" name="novella_form" id="novella_form">
                 <div>
-                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novella" class="text-dark col-lg-9" id="novella" required="required" accept=".docx">
-                  <button type="submit" class="btn btn-secondary col-lg-2 upload_novella_btn">上傳</button>
+                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-lg-9" id="novella" required="required" accept=".docx" multiple>
                   <p class="uploading">上傳中，請稍後！</p>
                   <i class="fa fa-check fa-lg text-success"></i>
                 </div>
-              </form>
               <hr>
                 <label for="exampleInputEmail1" class="text-dark">
                   <b>
                     <b>上傳著作權同意書</b>
                   </b>
                 </label>
-                <form @submit.prevent="submit" name="novella_agree_form" id="novella_agree_form">
-                  <input type="file" class="text-dark col-lg-9" name="novella_agreement" id="novella_agreement" required="required" accept="image/*,.pdf">
-                   <button type="submit"  class="btn btn-secondary col-lg-2">上傳</button>
+                  <input type="file" class="text-dark col-lg-9" name="agreement" id="novella_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
                    <p class="uploading">檔案上傳中，請稍後！</p>
                   <i class="fa fa-check fa-lg text-success"></i>
-                </form>
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
@@ -102,27 +87,7 @@
         </div>
       </div>
     </div>
-    <div class="modal" id="upload_alert">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title text-danger">
-              <b>請注意</b>
-            </h3>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>請先完成個人資料填寫，方能上傳作品。</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">前往填寫個人資料</button>
-            <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <div class="p-0">
       <div class="container">
         <div class="row">
@@ -292,13 +257,15 @@ import Navbar from './Navbar.vue'
       },
       submit: function(event) {
         const form_id = event.target.name
-        $('#' + event.target.name + ' button').hide()
         $('#' + event.target.name + ' p').show()
-        var formData = new FormData(event.target)
+        const formData = new FormData(event.target)
+        formData.append('novel_sn','A001');
+        formData.append('email','paku@sdf.xsdf');
         this.$http.post('http://localhost/upload.php',formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          emulateJSON: true
         }).then(function (res) {
           $('#' + form_id + ' p').hide()
           $('#' + form_id + ' i').show()

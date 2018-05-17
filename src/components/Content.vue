@@ -149,22 +149,22 @@
         alert_text: '',
         error_show: false,
         pm_login_item: {
-          client_id: '5843717039843802',
+          client_id: '9638357746234817',
           identifier: '',
           password: ''
         },
         FB_login_item:{
           provider: 'facebook',
-          client_id: '5843717039843802',
+          client_id: '9638357746234817',
           access_token: ''
         },
         Google_login_item:{
           provider: 'google',
-          client_id: '5843717039843802',
+          client_id: '9638357746234817',
           access_token: ''
         },
         register_item: {
-          client_id: '5843717039843802',
+          client_id: '9638357746234817',
           email: '',
           password: '',
           password2: ''
@@ -173,22 +173,22 @@
     },
     methods:{
       pm_login() {
-        this.$http.post('http://dev.members.panmedia.asia/api/server/login',this.pm_login_item).then( access => {
+        this.$http.post('https://members.panmedia.asia/api/server/login',this.pm_login_item).then( success => {
           this.error_show = false;
           //get member profile
           this.$http.get(
-            'http://dev.members.panmedia.asia/api/v1/profile',
+            'https://members.panmedia.asia/api/v1/profile',
             { headers: {
-                Authorization: 'Bearer ' + access.body.message.access_token
+                Authorization: 'Bearer ' + success.body.message.access_token
               }
             }
           ).then( res => {
+            console.log(res)
             this.$bus.$emit('login_access',res)
           })
         },error => {
           console.log(error)
-          this.alert_text = '帳號密碼錯誤。';
-          this.error_show = true;
+          this.login_error(error)
         })
       },
       FB_login() {
@@ -196,22 +196,20 @@
           if( response.status === 'connected' ) {
             this.FB_login_item.access_token = response.authResponse.accessToken;
           }
-          this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( access => {
+          this.$http.post('https://members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( success => {
             this.error_show = false;
             //get member profile
             this.$http.get(
-              'http://dev.members.panmedia.asia/api/v1/profile',
+              'https://members.panmedia.asia/api/v1/profile',
               { headers: {
-                  Authorization: 'Bearer ' + access.body.message.access_token
+                  Authorization: 'Bearer ' + success.body.message.access_token
                 }
               }
             ).then( res => {
               this.$bus.$emit('login_access',res)
             })
           },error => {
-            console.log(error)
-            this.alert_text = '帳號密碼錯誤。';
-            this.error_show = true;
+            this.login_error(error)
           })
         }, {scope: 'public_profile,email'})
       },
@@ -223,23 +221,21 @@
           })
           auth2.attachClickHandler(this.$refs.google_login, {}, googleUser => {
             this.Google_login_item.access_token = googleUser.getAuthResponse().id_token;
-            this.$http.post('http://dev.members.panmedia.asia/api/server/oauth/google',this.Google_login_item).then( access => {
+            this.$http.post('https://members.panmedia.asia/api/server/oauth/google',this.Google_login_item).then( success => {
 
             this.error_show = false;
             //get member profile
             this.$http.get(
-              'http://dev.members.panmedia.asia/api/v1/profile',
+              'https://members.panmedia.asia/api/v1/profile',
               { headers: {
-                  Authorization: 'Bearer ' + access.body.message.access_token
+                  Authorization: 'Bearer ' + success.body.message.access_token
                 }
               }
               ).then( res => {
                 this.$bus.$emit('login_access',res)
               })
             },error =>{
-              console.log(error)
-              this.alert_text = '帳號密碼錯誤。';
-              this.error_show = true;
+              this.login_error(error)
             })
           }, error => console.log(error))
         })
@@ -259,7 +255,7 @@
           this.error_show = true;
         }
 
-        this.$http.post('http://dev.members.panmedia.asia/api/server/register',this.register_item).then( access => {
+        this.$http.post('https://members.panmedia.asia/api/server/register',this.register_item).then( success => {
           alert('註冊完成，請前往收信。')
         },error => {
           if( error.body.code == 45 ) {
@@ -274,6 +270,10 @@
         } else {
           window.location = 'myfile';
         }
+      },login_error(error) {
+        console.log(error)
+        this.alert_text = '帳號密碼錯誤。';
+        this.error_show = true;
       }
     }
   }

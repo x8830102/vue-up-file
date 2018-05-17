@@ -36,7 +36,7 @@
               <i class="fa d-inline fa-lg fa-user-circle-o"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="myfile.html">個人資料</a>
+              <a class="dropdown-item" href="myfile">個人資料</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#" @click="logout">登出</a>
             </div>
@@ -57,8 +57,10 @@
     },
     created() {
       this.$bus.$on('login_access', (msg) => {
+        console.log(msg);
         let expireDays = 1000 * 60 * 60 * 24 * 15;
         this.setCookie('username', msg.body.user.nickname, expireDays);
+        this.setCookie('email', msg.body.user.email, expireDays);
         location.reload() 
       });
     },
