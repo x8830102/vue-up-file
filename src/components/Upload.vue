@@ -227,13 +227,13 @@
                         <td></td>
                         <td class="">
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="!short_novel_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data == 'N/A'" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
                         <td>
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="!novella_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="novella_data == 'N/A'" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
