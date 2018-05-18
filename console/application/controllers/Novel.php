@@ -76,11 +76,50 @@ class Novel extends CI_Controller
 						$data_insert['novel_file_name'] = $new_name;
 						$data_insert['novel_file_size'] = $file_size;
 						$data_insert['agreement_file_name'] = $agreement_file_name;
+						$data_insert['ip'] = $this->input->ip_address();
 						$data_insert['up_date'] = date('Y-m-d H:i:s');
 						if($this->member_novel->insert_row($data_insert))
 						{
 							$feedback['success'] = true;
 							$feedback['msg'] = '上傳成功';
+
+
+                			$bcc = array();
+                			$this->load->library("mailgun");
+
+                			$page_data = array();
+							$page_data['email'] = $email;
+							$page_data['novel_no'] = $data_insert['novel_no'];
+							$page_data['up_date'] = $data_insert['up_date'];
+							$page_data['novel_type_name'] = $novel_type==1? '短篇小說':'中短篇小說';
+							$page_data['mamber_name'] = $member['name'];
+							$page_data['mamber_pan_name'] = $member['pan_name'];
+
+
+							$data_mail = array();
+							$data_mail['toemail'] = $email;
+							$data_mail['subject'] = '[泛科幻獎] '.$member['pan_name'].'，感謝您的投稿！';
+							$data_mail['body'] = $this->load->view('email_novel_acception', $page_data, true);
+							$data_mail['controller'] = $this->uri->uri_string();
+							$data_mail['success'] = 0;
+
+							$attachment_file = $this->sourceFolder.$data_insert['novel_file_name'];
+
+                			$bcc = array('jerrywu@panmedia.asia');
+                			$this->load->library("mailgun");
+	                        if (!$this->mailgun->service_mail($data_mail['toemail'], $data_mail['subject'], $data_mail['body'], $bcc, '系統管理員', $attachment_file, $data_insert['novel_no'].'_'.$data_insert['novel_file_name']))
+	                        {
+	                            $data_mail["server_log"] = $this->mailgun->msg_error;
+	                        } 
+	                        else
+	                        {
+	                            $data_mail["success"] = 1;
+	                            $data_mail["time_sent"] = date('Y-m-d H:i:s');
+								$feedback['success'] = true;
+	                        }
+
+							$this->load->model("log_mail");
+							$this->log_mail->insert_row($data_mail);
 						}
 						else
 						{
