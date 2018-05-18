@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 投稿項目：<?php echo $novel_type_name;?><br />
 參賽者姓名：<?php echo $mamber_name;?><br />
 筆名：<?php echo $mamber_pan_name;?><br />
-作品上傳紀錄查詢連結：http://pansf-upload.panmedia.asia/myfile<br />
+作品上傳紀錄查詢連結：http://pansf-upload.panmedia.asia/upfile<br />
 <br />
 <br />
 泛科幻獎籌備團隊
