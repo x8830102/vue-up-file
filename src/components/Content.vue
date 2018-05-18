@@ -117,13 +117,13 @@
           <div class="col-md-4 offset-md-2 text-center">
             <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_1_active.png" width="100px" height="100px">
             <div class="col-md-12 p-5">
-              <p href="#" @click="checked_login"  data-toggle="modal" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </p>
+              <p href="#" @click="checked_login($event)" id="myfile_link" data-toggle="modal" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </p>
             </div>
           </div>
           <div class="col-md-4">
             <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_2_active.png" width="100px" height="100px">
             <div class="col-md-12 text-center p-5">
-              <p @click="checked_login" class="btn btn-lg m-0 btn-outline-light">STEP 2：作品上傳 </p>
+              <p @click="checked_login($event)" id="upload_link" class="btn btn-lg m-0 btn-outline-light">STEP 2：作品上傳 </p>
             </div>
           </div>
         </div>
@@ -346,7 +346,13 @@
         if( this.getCookie('username') == null ) {
           $('#mode_login').modal()
         } else {
-          window.location = 'myfile';
+          console.log(e.target.id)
+          if( e.target.name == 'myfile_link' ) {
+            window.location = 'myfile';
+          } else {
+            window.location = 'myfile';
+          }
+          
         }
       },login_error(error) {
         console.log(error)
