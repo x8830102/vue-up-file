@@ -146,7 +146,7 @@ import Navbar from './Navbar.vue'
       }
     },
     created() {
-      this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
         if ( success.body.success == true ) {
           this.fill_in = true
         }
@@ -155,7 +155,7 @@ import Navbar from './Navbar.vue'
     methods: {
       save_member_data() {
         if( (this.member_data.name && this.member_data.pan_name && this.member_data.phone) != '' ) {
-          this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/update', this.member_data,{emulateJSON: true}).then(success => {
+          this.$http.post('http://pansf-upload.panmedia.asia/console/member/update', this.member_data,{emulateJSON: true}).then(success => {
             console.log(success);
             this.success_show = true
             this.fill_in = true

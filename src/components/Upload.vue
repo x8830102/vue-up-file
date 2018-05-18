@@ -268,19 +268,19 @@ import Navbar from './Navbar.vue'
       }
     },
     created() {
-      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 1},{emulateJSON: true}).then(success => {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 1},{emulateJSON: true}).then(success => {
         this.short_novel_total = success.data.data.length
       },error => {
         console.log(error)
       })
 
-      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 2},{emulateJSON: true}).then(success => {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 2},{emulateJSON: true}).then(success => {
         this.novella_total = success.data.data.length
       },error => {
         console.log(error)
       })
 
-      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
         console.log(success.data)
         if( success.data.success ) {
           this.short_novel_data.novel_no = success.data.data.novel_no
@@ -295,7 +295,7 @@ import Navbar from './Navbar.vue'
         console.log(error)
       })
 
-      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 2},{emulateJSON: true}).then(success => {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/my',{email: this.getCookie('email'), novel_type: 2},{emulateJSON: true}).then(success => {
         console.log(success.data)
         if( success.data.success ) {
           this.novella_data.novel_no = success.data.data.novel_no
@@ -327,7 +327,7 @@ import Navbar from './Navbar.vue'
         $('#' + event.target.name + ' p').show()
         const formData = new FormData(event.target)
         formData.append('email',this.getCookie('email'));
-        this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/upload',formData,{
+        this.$http.post('http://pansf-upload.panmedia.asia/console/novel/upload',formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           },
