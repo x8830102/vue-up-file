@@ -61,7 +61,7 @@
         let expireDays = 1000 * 60 * 60 * 24 * 15;
         this.setCookie('username', msg.body.user.nickname, expireDays);
         this.setCookie('email', msg.body.user.email, expireDays);
-        location.reload() 
+        location.reload()
       });
     },
     mounted() {
@@ -74,6 +74,7 @@
     methods:{
       logout() {
         this.delCookie('username')
+        this.delCookie('email')
         window.location = '/';
       }
     }

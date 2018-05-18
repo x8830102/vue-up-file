@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <Navbar></Navbar>
-    <div class="modal" id="short">
+    <div class="modal" id="short_novel">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -13,31 +13,39 @@
               <span>×</span>
             </button>
           </div>
-          <div class="card-block p-5">
-            <label for="exampleInputEmail1" class="text-dark">
-              <b>
-                <b>上傳作品</b>
-              </b> (檔案大小不得超過 10 MB)</label>
-            <input type="file" @change="getfile" class="form-control-file text-dark" id="short_myfile" required="required">
-            <hr>
-            <b>
+          <form  @submit.prevent="submit" name="short_novel_form" id="short_novel_form">
+            <div class="card-block p-5">
               <label for="exampleInputEmail1" class="text-dark">
                 <b>
-                  <b>上傳著作權同意書</b>
-                </b>
+                  <b>上傳作品</b>
+                </b> (檔案大小不得超過 10 MB)
               </label>
-              <input type="file" class="form-control-file text-dark" id="short_agreement" required="required">
-              <div class="form-check mt-2 text-dark py-3">
-                <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
-                <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
-                  <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a>&nbsp;與同獎項不得重複投稿規則。</label>
-              </div>
-            </b>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary">確認上傳</button>
-            <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
-          </div>
+                <div>
+                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-lg-9" id="short_novel" required="required" accept=".docx" multiple>
+                  <p class="uploading">上傳中，請稍後！</p>
+                  <i class="fa fa-check fa-lg text-success"></i>
+                </div>
+              <hr>
+                <label for="exampleInputEmail1" class="text-dark">
+                  <b>
+                    <b>上傳著作權同意書</b>
+                  </b>
+                </label>
+                  <input type="file" class="text-dark col-lg-9" name="agreement" id="short_novel_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
+                   <p class="uploading">檔案上傳中，請稍後！</p>
+                  <i class="fa fa-check fa-lg text-success"></i>
+                <div class="form-check mt-2 text-dark py-3">
+                  <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
+                  <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
+                    <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a>&nbsp;與同獎項不得重複投稿規則。</label>
+                    <input type="hidden" name="up_type" value="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">完成上傳</button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -77,6 +85,7 @@
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
                     <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a>&nbsp;與同獎項不得重複投稿規則。</label>
+                    <input type="hidden" name="up_type" value="2">
                 </div>
             </div>
             <div class="modal-footer">
@@ -170,26 +179,33 @@
                     <tbody class="text-center">
                       <tr>
                         <td class="bg-light text-center">上傳時間</td>
-                        <td class="text-center">{{up_novel_data.up_date}}</td>
-                        <td class="text-info text-center">N/A</td>
+                        <td class="text-center" :class="short_novel_data.up_date != 'N/A' ? '' : 'text-info'">{{short_novel_data.up_date}}</td>
+                        <td class="text-center" :class="novella_data.up_date != 'N/A' ? '' : 'text-info'">{{novella_data.up_date}}</td>
                       </tr>
                       <tr>
                         <td class="bg-light text-center">投稿編號</td>
-                        <td class="text-center">{{up_novel_data.novel_sn}}</td>
-                        <td class="text-info text-center">N/A</td>
+                        <td class="text-center" :class="short_novel_data.novel_no != 'N/A' ? '' : 'text-info'">{{short_novel_data.novel_no}}</td>
+                        <td class="text-center" :class="novella_data.novel_no != 'N/A' ? '' : 'text-info'">{{novella_data.novel_no}}</td>
                       </tr>
                       <tr>
                         <td class="bg-light text-center">投稿作品</td>
-                        <td class="text-center">
-                          <i class="fa fa-check fa-lg text-primary"></i> {{up_novel_data.up_size}}</td>
-                        <td class="text-info text-center">N/A</td>
+                        <td class="text-center" :class="short_novel_data.up_size != 'N/A' ? '' : 'text-info'">
+                          <i class="fa fa-check fa-lg text-primary" v-if="short_novel_data.up_size != 'N/A'"></i> {{short_novel_data.up_size}}</td>
+                        <td class="text-center" :class="novella_data.up_size != 'N/A' ? '' : 'text-info'">
+                          <i class="fa fa-check fa-lg text-primary" v-if="novella_data.up_size != 'N/A'"></i> {{novella_data.up_size}}
+                        </td>
                       </tr>
                       <tr>
                         <td class="bg-light text-center">著作版權同意書</td>
-                        <td class="text-center">
-                          <i class="fa fa-check fa-lg text-primary"></i>
+                        <td class="text-center" :class="short_novel_data.agreement != 'N/A' ? '' : 'text-info'">
+                          <i class="fa fa-check fa-lg text-primary" v-if="short_novel_data.agreement != 'N/A'">
+                          </i>{{short_novel_data.agreement}}
                         </td>
-                        <td class="text-info text-center">N/A</td>
+                        <td class="text-center" :class="novella_data.agreement != 'N/A' ? '' : 'text-info'">
+
+                          <i class="fa fa-check fa-lg text-primary" v-if="novella_data.agreement != 'N/A'">
+                          </i>{{novella_data.agreement}}
+                        </td>
                       </tr>
                       <tr></tr>
                       <tr></tr>
@@ -198,7 +214,8 @@
                         <td></td>
                         <td class="">
                           <p>
-                            <a href="#" class="btn btn-outline-info disabled">完成上傳</a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a href="#" class="btn btn-outline-info disabled" v-else="short_novel_data">完成上傳</a>
                           </p>
                         </td>
                         <td>
@@ -234,20 +251,70 @@ import Navbar from './Navbar.vue'
     data(){
       return {
         file : {},
-        short_novel_total: '10',
-        novella_total: '20',
-        up_novel_data: {
-          novel_sn: 'A001',
-          up_date: '2018-05-16 20:15',
-          up_size: '0.7MB',
-          up_type: '1'
+        short_novel_total: '0',
+        novella_total: '0',
+        short_novel_data: {
+          novel_no: 'N/A',
+          up_date: 'N/A',
+          up_size: 'N/A',
+          agreement: 'N/A'
+        },
+        novella_data: {
+          novel_no: 'N/A',
+          up_date: 'N/A',
+          up_size: 'N/A',
+          agreement: 'N/A'
         }
       }
+    },
+    created() {
+      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 1},{emulateJSON: true}).then(success => {
+      //   this.short_novel_total = success.data.data.length
+      // },error => {
+      //   console.log(error)
+      // })
+
+      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 2},{emulateJSON: true}).then(success => {
+      //   this.novella_total = success.data.data.length
+      // },error => {
+      //   console.log(error)
+      // })
+
+      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
+      //   console.log(success.data)
+      //   if( success.data.success ) {
+      //     this.short_novel_data.novel_no = success.data.data.novel_no
+      //     this.short_novel_data.up_date = success.data.data.up_date.substr(0,16)
+      //     this.short_novel_data.up_size = (success.data.data.novel_file_size / 1024 / 1024).toFixed(1) + "MB"
+
+      //     if( success.body.data.agreement_file_name ) {
+      //       this.short_novel_data.agreement = ''
+      //     }
+      //   }
+      // },error => {
+      //   console.log(error)
+      // })
+
+      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 2},{emulateJSON: true}).then(success => {
+        console.log(success.data)
+        if( success.data.success ) {
+          this.novella_data.novel_no = success.data.data.novel_no
+          this.novella_data.up_date = success.data.data.up_date.substr(0,16)
+          this.novella_data.up_size = (success.data.data.novel_file_size / 1024 / 1024).toFixed(1) + "MB"
+
+          if( success.body.data.agreement_file_name ) {
+            this.novella_data.agreement = ''
+          }
+        }
+      },error => {
+        console.log(error)
+      })
     },
     methods: {
       getfile(files,id) {
         this.file = files[0]
-        if( this.file.size > 100000000  ) {
+        const size = 1024 * 1024 *10;
+        if( this.file.size > size  ) {
           alert('檔案超過 10MB，無法上傳。')
           $('#' + id).val('');
           this.file = ''
@@ -259,9 +326,8 @@ import Navbar from './Navbar.vue'
         const form_id = event.target.name
         $('#' + event.target.name + ' p').show()
         const formData = new FormData(event.target)
-        formData.append('novel_sn','A001');
-        formData.append('email','paku@sdf.xsdf');
-        this.$http.post('http://localhost/upload.php',formData,{
+        formData.append('email',this.getCookie('email'));
+        this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/upload',formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           },
@@ -270,8 +336,11 @@ import Navbar from './Navbar.vue'
           $('#' + form_id + ' p').hide()
           $('#' + form_id + ' i').show()
           console.log(res)
+          setTimeout("location.reload()", '1500')
+          
         })
-      }
+      },
+
     }
   }
 </script>
