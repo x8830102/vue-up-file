@@ -145,7 +145,7 @@ import Navbar from './Navbar.vue'
         }
       }
     },
-    mounted() {
+    created() {
       this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
         if ( success.body.success == true ) {
           this.fill_in = true

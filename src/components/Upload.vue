@@ -268,32 +268,32 @@ import Navbar from './Navbar.vue'
       }
     },
     created() {
-      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 1},{emulateJSON: true}).then(success => {
-      //   this.short_novel_total = success.data.data.length
-      // },error => {
-      //   console.log(error)
-      // })
+      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 1},{emulateJSON: true}).then(success => {
+        this.short_novel_total = success.data.data.length
+      },error => {
+        console.log(error)
+      })
 
-      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 2},{emulateJSON: true}).then(success => {
-      //   this.novella_total = success.data.data.length
-      // },error => {
-      //   console.log(error)
-      // })
+      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/all',{novel_type: 2},{emulateJSON: true}).then(success => {
+        this.novella_total = success.data.data.length
+      },error => {
+        console.log(error)
+      })
 
-      // this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
-      //   console.log(success.data)
-      //   if( success.data.success ) {
-      //     this.short_novel_data.novel_no = success.data.data.novel_no
-      //     this.short_novel_data.up_date = success.data.data.up_date.substr(0,16)
-      //     this.short_novel_data.up_size = (success.data.data.novel_file_size / 1024 / 1024).toFixed(1) + "MB"
+      this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
+        console.log(success.data)
+        if( success.data.success ) {
+          this.short_novel_data.novel_no = success.data.data.novel_no
+          this.short_novel_data.up_date = success.data.data.up_date.substr(0,16)
+          this.short_novel_data.up_size = (success.data.data.novel_file_size / 1024 / 1024).toFixed(1) + "MB"
 
-      //     if( success.body.data.agreement_file_name ) {
-      //       this.short_novel_data.agreement = ''
-      //     }
-      //   }
-      // },error => {
-      //   console.log(error)
-      // })
+          if( success.body.data.agreement_file_name ) {
+            this.short_novel_data.agreement = ''
+          }
+        }
+      },error => {
+        console.log(error)
+      })
 
       this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/my',{email: this.getCookie('email'), novel_type: 2},{emulateJSON: true}).then(success => {
         console.log(success.data)
