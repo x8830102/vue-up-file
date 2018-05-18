@@ -20,20 +20,27 @@
                   <b>上傳作品</b>
                 </b> (檔案大小不得超過 10 MB)
               </label>
-                <div>
-                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-lg-9" id="short_novel" required="required" accept=".docx" multiple>
-                  <p class="uploading">上傳中，請稍後！</p>
-                  <i class="fa fa-check fa-lg text-success"></i>
+                <div class="row">
+                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-9" id="short_novel" required="required" accept=".docx" multiple>
+                  <div class="text-center col-3">
+                    <div class="uploading loader"></div>
+                    <i class="fa fa-check fa-lg text-success"></i>
+                  </div>
                 </div>
-              <hr>
-                <label for="exampleInputEmail1" class="text-dark">
+                  
+                 <hr>
+                <label for="exampleInputEmail1" class="text-dark col-lg-12">
                   <b>
                     <b>上傳著作權同意書</b>
                   </b>
                 </label>
-                  <input type="file" class="text-dark col-lg-9" name="agreement" id="short_novel_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
-                   <p class="uploading">檔案上傳中，請稍後！</p>
-                  <i class="fa fa-check fa-lg text-success"></i>
+                <div class="row">
+                  <input type="file" class="text-dark col-9" name="agreement" id="short_novel_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
+                  <div class="text-center col-3">
+                    <div class="uploading loader"></div>
+                    <i class="fa fa-check fa-lg text-success"></i>
+                  </div>
+                </div>
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
@@ -62,25 +69,31 @@
           </div>
           <form  @submit.prevent="submit" name="novella_form" id="novella_form">
             <div class="card-block p-5">
-              <label for="exampleInputEmail1" class="text-dark">
+              <label for="exampleInputEmail1" class="text-dark col-lg-12">
                 <b>
                   <b>上傳作品</b>
                 </b> (檔案大小不得超過 10 MB)
               </label>
-                <div>
-                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-lg-9" id="novella" required="required" accept=".docx" multiple>
-                  <p class="uploading">上傳中，請稍後！</p>
-                  <i class="fa fa-check fa-lg text-success"></i>
+                <div class="row">
+                  <input type="file" @change="getfile($event.target.files,$event.target.id)" name="novel" class="text-dark col-9" id="novella" required="required" accept=".docx" multiple>
+                  <div class="col-3">
+                    <div class="uploading loader"></div>
+                    <i class="fa fa-check fa-lg text-success"></i>
+                  </div>
                 </div>
               <hr>
-                <label for="exampleInputEmail1" class="text-dark">
+                <label for="exampleInputEmail1" class="text-dark col-lg-12">
                   <b>
                     <b>上傳著作權同意書</b>
                   </b>
                 </label>
-                  <input type="file" class="text-dark col-lg-9" name="agreement" id="novella_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
-                   <p class="uploading">檔案上傳中，請稍後！</p>
-                  <i class="fa fa-check fa-lg text-success"></i>
+                <div class="row">
+                  <input type="file" class="text-dark col-9" name="agreement" id="novella_agreement" required="required" accept=".pdf,.jpg,.png,.tif" multiple>
+                  <div class="col-3">
+                    <div class="uploading loader"></div>
+                    <i class="fa fa-check fa-lg text-success"></i>
+                  </div>
+                </div>
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
@@ -214,13 +227,14 @@
                         <td></td>
                         <td class="">
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
-                            <a href="#" class="btn btn-outline-info disabled" v-else="short_novel_data">完成上傳</a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="!short_novel_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
                         <td>
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" data-target="#novella_dialog" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="!novella_data" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
                       </tr>
@@ -324,7 +338,7 @@ import Navbar from './Navbar.vue'
       },
       submit: function(event) {
         const form_id = event.target.name
-        $('#' + event.target.name + ' p').show()
+        $('#' + event.target.name + ' .loader').show()
         const formData = new FormData(event.target)
         formData.append('email',this.getCookie('email'));
         this.$http.post('http://pansf-upload.panmedia.asia/console/novel/upload',formData,{
@@ -333,10 +347,10 @@ import Navbar from './Navbar.vue'
           },
           emulateJSON: true
         }).then(function (res) {
-          $('#' + form_id + ' p').hide()
-          $('#' + form_id + ' i').show()
+          $('#' + form_id + ' .loader').hide()
+          $('#' + form_id + ' .text-success').show()
           console.log(res)
-          setTimeout("location.reload()", '1500')
+          setTimeout("location.reload()", '1000')
           
         })
       },
@@ -361,4 +375,17 @@ import Navbar from './Navbar.vue'
   .uploading{
     display:none;
   }
+.loader {
+    border: 3px solid #f3f3f3; /* Light grey */
+    border-top: 3px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 </style>

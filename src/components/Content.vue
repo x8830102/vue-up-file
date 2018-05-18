@@ -17,22 +17,85 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="text-center">短篇小說</th>
-                    <th class="text-center px-0">中短篇小說</th>
+                    <th class="text-center" @click="load_short_report">短篇小說</th>
+                    <th class="text-center px-0"  @click="load_novella_report">中短篇小說</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center px-0">200</td>
-                    <td class="text-center px-0">300&nbsp;</td>
+                    <td class="text-center px-0"  @click="load_short_report">{{short_novel_total}}</td>
+                    <td class="text-center px-0"  @click="load_novella_report">{{novella_total}}</td>
                   </tr>
-                  <tr></tr>
-                  <tr></tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="modal" id="short_report">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">
+              短篇小說投稿紀錄
+            </h3>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>上傳時間</th>
+              <th>投稿編號</th>
+            </thead>
+            <tbody>
+              <tr v-for="( item,index ) in short_novel_data">
+                <td>{{ index+1 }}</td>
+                <td>{{ item.up_date }}</td>
+                <td>{{ item.novel_no }}</td>
+              </tr>
+            </tbody>
+           
+          </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="novella_report">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">
+              中短篇小說投稿紀錄
+            </h3>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>上傳時間</th>
+              <th>投稿編號</th>
+            </thead>
+            <tbody>
+              <tr v-for="( item,index ) in novella_data">
+                <td>{{ index+1 }}</td>
+                <td>{{ item.up_date }}</td>
+                <td>{{ item.novel_no }}</td>
+              </tr>
+            </tbody>
+           
+          </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
+          </div>
+        </div> 
+
       </div>
     </div>
     <div class="p-0 bg-secondary">
@@ -168,8 +231,23 @@
           email: '',
           password: '',
           password2: ''
-        }
+        },
+        short_novel_data:{},
+        novella_data:{},
+        short_novel_total:'',
+        novella_total:''
       } 
+    },
+    created() {
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 1},{emulateJSON: true}).then( success => {
+        this.short_novel_data = success.data.data
+        this.short_novel_total = success.data.data.length
+      })
+
+      this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 2},{emulateJSON: true}).then( success => {
+        this.novella_data = success.data.data
+        this.novella_total = success.data.data.length
+      })
     },
     methods:{
       pm_login() {
@@ -274,6 +352,12 @@
         console.log(error)
         this.alert_text = '帳號密碼錯誤。';
         this.error_show = true;
+      },
+      load_short_report(){
+        $('#short_report').modal()
+      },
+      load_novella_report(){
+        $('#novella_report').modal()
       }
     }
   }

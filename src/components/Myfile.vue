@@ -149,6 +149,9 @@ import Navbar from './Navbar.vue'
       this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
         if ( success.body.success == true ) {
           this.fill_in = true
+          this.member_data.name = success.data.data.name
+          this.member_data.pan_name = success.data.data.pan_name
+          this.member_data.phone = success.data.data.phone
         }
       })
     },
