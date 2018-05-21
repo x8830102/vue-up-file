@@ -155,6 +155,11 @@ import Navbar from './Navbar.vue'
         }
       })
     },
+    mounted() {
+      if( this.getCookie('username') == null ) {
+        window.location = '/';
+      }
+    },
     methods: {
       save_member_data() {
         if( (this.member_data.name && this.member_data.pan_name && this.member_data.phone) != '' ) {

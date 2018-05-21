@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <Navbar></Navbar>
-    <div class="modal" id="short_novel">
+    <div class="modal" id="short_novel_dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -227,13 +227,13 @@
                         <td></td>
                         <td class="">
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data.novel_no == 'N/A'" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data.novel_no == 'N/A'" data-target="#short_novel_dialog" data-toggle="modal">前往上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
                         <td>
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="novella_data.novel_no == 'N/A'" data-target="#short_novel" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="novella_data.novel_no == 'N/A'" data-target="#novella_dialog" data-toggle="modal">前往上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
@@ -323,6 +323,11 @@ import Navbar from './Navbar.vue'
       },error => {
         console.log(error)
       })
+    },
+    mounted() {
+      if( this.getCookie('username') == null ) {
+        window.location = '/';
+      }
     },
     methods: {
       getfile(files,id) {

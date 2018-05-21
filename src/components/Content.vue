@@ -17,14 +17,14 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="text-center" @click="load_short_report">短篇小說</th>
-                    <th class="text-center px-0"  @click="load_novella_report">中短篇小說</th>
+                    <th class="text-center" style=" cursor: pointer;" @click="load_short_report">短篇小說</th>
+                    <th class="text-center px-0" style=" cursor: pointer;" @click="load_novella_report">中短篇小說</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center px-0"  @click="load_short_report">{{short_novel_total}}</td>
-                    <td class="text-center px-0"  @click="load_novella_report">{{novella_total}}</td>
+                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_short_report">{{short_novel_total}}</td>
+                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_novella_report">{{novella_total}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -150,13 +150,13 @@
             </transition>
             <div class="form-check mt-2 form-check-inline form-control-lg">
               <ul>
-                <li>
+                <li @click="redio_toggle('login')">
                   <input class="form-check-input" type="radio" id="login" value="on" checked="checked" name="mode">
-                  <label class="form-check-label" for="login" @click="redio_toggle('login')">登入</label>
+                  <label class="form-check-label" for="login">登入</label>
                 </li>
-                <li>
+                <li @click="redio_toggle('reg')">
                   <input class="form-check-input" type="radio" id="reg" value="on" name="mode">
-                  <label class="form-check-label" for="reg" @click="redio_toggle('reg')">註冊</label>
+                  <label class="form-check-label" for="reg">註冊</label>
                 </li>
               </ul>
             </div>
@@ -211,6 +211,7 @@
       return {
         alert_text: '',
         error_show: false,
+        fill_in: false,
         pm_login_item: {
           client_id: '9638357746234817',
           identifier: '',
@@ -248,7 +249,14 @@
         this.novella_data = success.data.data
         this.novella_total = success.data.data.length
       })
+
+      this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.getCookie('email')},{emulateJSON: true}).then(success => {
+        if ( success.body.success == true ) {
+          this.fill_in = true
+        }
+      })
     },
+    
     methods:{
       pm_login() {
         this.$http.post('https://members.panmedia.asia/api/server/login',this.pm_login_item).then( success => {
@@ -350,7 +358,9 @@
           if( e.target.name == 'myfile_link' ) {
             window.location = 'myfile';
           } else {
-            window.location = 'myfile';
+            if( this.fill_in ) {
+              window.location = 'upfile';
+            }
           }
           
         }
