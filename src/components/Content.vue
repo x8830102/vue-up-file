@@ -363,6 +363,8 @@
           } else {
             if( this.fill_in ) {
               window.location = 'upfile';
+            } else {
+              window.location = 'myfile';
             }
           }
         }
