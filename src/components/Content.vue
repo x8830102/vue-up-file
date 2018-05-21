@@ -256,7 +256,11 @@
         }
       })
     },
-    
+    mounted() {
+      if( location.search.split("=")[1] == 1 ) {
+        $('#mode_login').modal()
+      }
+    },
     methods:{
       pm_login() {
         this.$http.post('https://members.panmedia.asia/api/server/login',this.pm_login_item).then( success => {

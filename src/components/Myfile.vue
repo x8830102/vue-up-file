@@ -157,7 +157,7 @@ import Navbar from './Navbar.vue'
     },
     mounted() {
       if( this.getCookie('username') == null ) {
-        window.location = '/';
+        window.location = '/?=1';
       }
     },
     methods: {
