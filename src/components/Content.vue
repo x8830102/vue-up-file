@@ -358,15 +358,13 @@
         if( this.getCookie('username') == null ) {
           $('#mode_login').modal()
         } else {
-          console.log(e.target.id)
-          if( e.target.name == 'myfile_link' ) {
+          if( e.target.id == 'myfile_link' ) {
             window.location = 'myfile';
           } else {
             if( this.fill_in ) {
               window.location = 'upfile';
             }
           }
-          
         }
       },login_error(error) {
         console.log(error)
