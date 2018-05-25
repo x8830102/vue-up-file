@@ -29,7 +29,7 @@
                 </div>
                   
                  <hr>
-                <label for="exampleInputEmail1" class="text-dark col-lg-12">
+                <label for="exampleInputEmail1" class="text-dark">
                   <b>
                     <b>上傳著作權同意書</b>
                   </b>
@@ -69,7 +69,7 @@
           </div>
           <form  @submit.prevent="submit" name="novella_form" id="novella_form">
             <div class="card-block p-5">
-              <label for="exampleInputEmail1" class="text-dark col-lg-12">
+              <label for="exampleInputEmail1" class="text-dark">
                 <b>
                   <b>上傳作品</b>
                 </b> (檔案大小不得超過 10 MB)
