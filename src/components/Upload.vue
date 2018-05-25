@@ -82,7 +82,7 @@
                   </div>
                 </div>
               <hr>
-                <label for="exampleInputEmail1" class="text-dark col-lg-12">
+                <label for="exampleInputEmail1" class="text-dark">
                   <b>
                     <b>上傳著作權同意書</b>
                   </b>
@@ -161,7 +161,7 @@
                   <strong>作品上傳</strong>
                 </b>
                 <br> </h4>
-              <p class="m-0 p-5">兩種獎項可同時參加，各以投稿一篇為限，同一篇稿件不得重複上傳，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
+              <p class="m-0 p-5" style="text-align: left">兩種獎項可同時參加，各以投稿一篇為限，同一篇稿件不得重複上傳，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
                 <br>1. 上傳作品 (上傳 docx 檔，檔案大小不得超過 10 MB)&nbsp;
                 <br>2. 上傳已簽署之著作權同意書 (上傳 pdf 或 jpg,png,tif 等圖片檔，
                 <a href="#">同意書下載連結</a>)</p>

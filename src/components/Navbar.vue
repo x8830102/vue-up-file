@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white">
     <div class="container">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent">
         <span class="navbar-toggler-icon"></span>

@@ -97,4 +97,32 @@ class Member_novel extends CI_Model{
         }
         return false;
     }
+
+
+    //admin
+    public function get_novel_list()
+    {
+        $this->db->select('*');
+        $this->db->from('pansf2018_novel');
+        $this->db->join('pansf2018_member_data', 'pansf2018_novel.email = pansf2018_member_data.email', 'left');
+        $this->db->where('pansf2018_member_data.status', 1);
+        $this->db->order_by('up_date DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_novel_list_by_search_key($key=null)
+    {
+        $this->db->select('*');
+        $this->db->from('pansf2018_novel');
+        $this->db->join('pansf2018_member_data', 'pansf2018_novel.email = pansf2018_member_data.email', 'left');
+        $this->db->where('pansf2018_member_data.status', 1);
+        $this->db->where('pansf2018_member_data.name', $key);
+        $this->db->or_where('pansf2018_member_data.pan_name', $key);
+        $this->db->or_where('pansf2018_member_data.email', $key);
+        $this->db->or_where('pansf2018_novel.novel_no', $key);
+        $this->db->order_by('up_date DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

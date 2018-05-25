@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="bg-secondary p-3">
+        <div class="bg-light p-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-8 offset-md-2">
+          <div class="col-md-8 text-color offset-md-2">
             <h5 class="p-4">
               <b>
                 <strong>目前投稿人數</strong>
@@ -98,38 +98,42 @@
 
       </div>
     </div>
-    <div class="p-0 bg-secondary">
+    <div class="p-0 bg-light">
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-2">
-            <h5 class="text-light p-4">
+            <h5 class="text-color p-4">
               <b>
                 <strong>作品上傳流程</strong>
               </b>
-              <br> </h5>
+              <p class="py-3 d-inline-flex text-color">
+               <b style="font-size: 16px">&nbsp; (需登入才能投稿)</b>
+              </p>
+              <br> 
+            </h5>
           </div>
         </div>
       </div>
     </div>
-    <div class="bg-secondary p-0">
+    <div class="bg-light p-0">
       <div class="container">
         <div class="row">
           <div class="col-md-4 offset-md-2 text-center">
             <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_1_active.png" width="100px" height="100px">
             <div class="col-md-12 p-5">
-              <p href="#" @click="checked_login($event)" id="myfile_link" data-toggle="modal" class="btn btn-lg m-0 btn-outline-light">STEP 1：個人資料填寫 </p>
+              <p href="#" @click="checked_login($event)" id="myfile_link" data-toggle="modal" class="btn btn-lg m-0 btn-outline-secondary">STEP 1：個人資料填寫 </p>
             </div>
           </div>
           <div class="col-md-4">
             <img class="img-fluid d-block rounded-circle mx-auto" src="dist/image/icon_2_active.png" width="100px" height="100px">
             <div class="col-md-12 text-center p-5">
-              <p @click="checked_login($event)" id="upload_link" class="btn btn-lg m-0 btn-outline-light">STEP 2：作品上傳 </p>
+              <p @click="checked_login($event)" id="upload_link" class="btn btn-lg m-0 btn-outline-secondary">STEP 2：作品上傳 </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="py-5 bg-secondary"></div>
+    <div class="py-5 bg-light"></div>
     <!--登入-->
     <div class="modal fade" id="mode_login">
       <div class="modal-dialog" role="document">
@@ -413,4 +417,7 @@ li { display: inline-block; }
   opacity: 1;
 }
 
+.text-color {
+  color: #173f7c;
+}
 </style>

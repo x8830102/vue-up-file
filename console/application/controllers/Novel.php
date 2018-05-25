@@ -224,6 +224,71 @@ class Novel extends CI_Controller
         $this->ajax_feedback($feedback);
 
 	}
+
+	public function admin_all()
+	{
+		$this->header_cross_domain();
+		$feedback = array('success' => false, 'data' => array(), 'msg' => '');
+
+
+        $this->load->model(['member_data', 'member_novel']);
+        $feedback['success'] = true;
+        if($log = $this->member_novel->get_novel_list())
+		{
+			foreach($log as $_l)
+			{
+				$_n = array();
+				$_n['novel_no'] = $_l['novel_no'];
+				$_n['up_date'] = $_l['up_date'];
+				$_n['name'] = $_l['name'];
+				$_n['pan_name'] = $_l['pan_name'];
+				$_n['email'] = $_l['email'];
+				$_n['novel_type'] = $_l['novel_type'];
+				$_n['novel_file_size'] = $_l['novel_file_size'];
+				$_n['novel_file_name'] = $_l['novel_file_name'];
+				$_n['agreement_file_name'] = $_l['agreement_file_name'];
+				$feedback['data'][]=$_n;
+			}
+		}
+		else
+		{
+			$feedback['msg'] = '尚無完成上傳作品';
+		}
+
+        $this->ajax_feedback($feedback);
+	}
+
+	public function search()
+	{
+		$this->header_cross_domain();
+		$feedback = array('success' => false, 'data' => array(), 'msg' => '');
+
+		$this->load->model(['member_novel']);
+        $feedback['success'] = true;
+        if($log = $this->member_novel->get_novel_list_by_search_key($this->input->post('key', true))) {
+        	foreach($log as $_l)
+			{
+				$_n = array();
+				$_n['novel_no'] = $_l['novel_no'];
+				$_n['up_date'] = $_l['up_date'];
+				$_n['name'] = $_l['name'];
+				$_n['pan_name'] = $_l['pan_name'];
+				$_n['email'] = $_l['email'];
+				$_n['novel_type'] = $_l['novel_type'];
+				$_n['novel_file_size'] = $_l['novel_file_size'];
+				$_n['novel_file_name'] = $_l['novel_file_name'];
+				$_n['agreement_file_name'] = $_l['agreement_file_name'];
+				$feedback['data'][]=$_n;
+			}
+        }
+        else
+		{
+			$feedback['msg'] = '搜尋結果為0筆';
+		}
+
+        $this->ajax_feedback($feedback);
+        
+	}
     
     private function header_cross_domain(){
         header('Access-Control-Allow-Origin: *');
