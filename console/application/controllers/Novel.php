@@ -95,12 +95,12 @@ class Novel extends CI_Controller
 								$page_data['up_date'] = $data_insert['up_date'];
 								$page_data['novel_type_name'] = $novel_type==1? '短篇小說':'中短篇小說';
 								$page_data['mamber_name'] = $member['name'];
-								$page_data['mamber_pan_name'] = $member['pan_name'];
+								$page_data['mamber_pan_name'] = $member['pan_name']? $member['pan_name']:'';
 
 
 								$data_mail = array();
 								$data_mail['toemail'] = $email;
-								$data_mail['subject'] = '[泛科幻獎] '.$member['pan_name'].'，感謝您的投稿！';
+								$data_mail['subject'] = '[泛科幻獎] '.$member['name'].'，感謝您的投稿！';
 								$data_mail['body'] = $this->load->view('email_novel_acception', $page_data, true);
 								$data_mail['controller'] = $this->uri->uri_string();
 								$data_mail['success'] = 0;
