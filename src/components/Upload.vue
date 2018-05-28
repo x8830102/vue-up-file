@@ -355,7 +355,7 @@ import Navbar from './Navbar.vue'
           $('#' + form_id + ' .loader').hide()
           $('#' + form_id + ' .text-success').show()
           console.log(res)
-          // setTimeout("location.reload()", '1000')
+          setTimeout("location.reload()", '1000')
           
         })
       },
