@@ -83,8 +83,8 @@
                       <label class="text-dark" for="exampleInputEmail1">參賽者本名*</label>
                       <input type="text" v-model:value="member_data.name" class="form-control form-control-sm" placeholder="請輸入你的姓名 (必填)" id="InputName" required="required"> </div>
                     <div class="form-group my-5">
-                      <label for="exampleInputEmail1" class="text-dark">筆名*</label>
-                      <input type="text" v-model:value="member_data.pan_name" class="form-control form-control-sm" id="InputNickName" placeholder="請輸入你想公開的筆名 (必填)" required="required"> </div>
+                      <label for="exampleInputEmail1" class="text-dark">筆名</label>
+                      <input type="text" v-model:value="member_data.pan_name" class="form-control form-control-sm" id="InputNickName" placeholder="請輸入你想公開的筆名 (必填)"> </div>
                     <div class="form-group my-5">
                       <label class="text-dark">聯絡信箱 *</label>
                       <input type="email" disabled="disabled" v-model:value="member_data.email" class="form-control form-control-sm" placeholder="請輸入你的聯絡信箱 (必填)" id="InputEmail" required="required"> </div>

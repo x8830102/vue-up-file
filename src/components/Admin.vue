@@ -5,9 +5,9 @@
         <div class="row p-4 m-0"><h3>參賽稿件管理</h3></div>
         <div class="row p-4 m-0">
             <div class="col-12">
-                <form @submit.prevent="submit">
+                <form @submit.prevent="submit($event)">
                     <input type="text" name="key" placeholder="請輸入關鍵字或投稿編號">
-                    <select name="novel_type" id="" class="ml-5" placeholder="請選擇投稿獎項">
+                    <select name="novel_type" class="ml-5" placeholder="請選擇投稿獎項">
                         <option value="0">全部</option>
                         <option value="1">短篇小說</option>
                         <option value="2">中短篇小說</option>
@@ -36,7 +36,7 @@
                     <th>功能</th>
                 </thead>
                 <tbody>
-                    <tr v-for="( item,index ) in novel_data">
+                    <tr v-if="novel_data != ''" v-for="( item,index ) in novel_data">
                         <td>{{ index+1 }}</td>
                         <td>{{ item.up_date }}</td>
                         <td>{{ item.novel_no }}</td>
@@ -55,7 +55,7 @@
         <nav aria-label="search result ">
           <ul class="pagination justify-content-end">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item" v-for=""><a class="page-link" href="#"></a></li>>
+            <li class="page-item" v-for="n in return_page_count"><a class="page-link" @click="submit(n)" href="#"> {{ n }} </a></li>
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul>
         </nav>
@@ -67,9 +67,10 @@
         name: 'Admin',
         data () {
             return {
-                all_total: '100',
-                short_total: '',
-                novella_total: '',
+                all_total: 0,
+                short_total: 0,
+                novella_total: 0,
+                data_count: 25,
                 novel_data: {},
                 page_item:{}
             }
@@ -87,36 +88,68 @@
                     console.log(error)
                 })
 
-            this.$http.post('http://pansf-upload.panmedia.asia/console/novel/admin_all','',{emulateJSON: true}).then( success => {
-
-                const resource = success.data.data
-                if( resource != '' ) {
-                    resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
-                    resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
-                    this.novel_data = resource
+            this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/admin_all','',{emulateJSON: true}).then( success => {
+                if( success.status == 200 ) {
+                    const resource = success.data.data
+                    if (resource != '') {
+                        resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
+                        resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
+                        this.novel_data = resource
+                        this.all_total = resource.length
+                    }
                 }
-                
             },error => {
                 console.log(error);
             })
         },
+        computed: {
+            return_page_count() {
+                const page_count = Math.ceil(this.all_total / this.data_count) 
+                return page_count;
+            }
+        },
         methods:{
-            submit(e) {
-                const formData = new FormData(e.target)
-                this.$http.post('http://pansf-upload.panmedia.asia/console/novel/search', formData,{emulateJSON: true}).then(
-                    success => {
-                        const resource = success.data.data
-                        if( resource != '' ) {
-                            resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
-                            resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
-                            this.novel_data = resource
+            submit(n) {
+                const formData = new FormData($('form')[0])
+                if(n != null ){
+                    this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
+                        success => {
+                            if( success.status == 200) {
+                                const resource = success.data.data
+                                if (resource != '') {
+                                    resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
+                                    resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
+                                    this.novel_data = resource
+                                } else {
+                                    this.novel_data = ''
+                                    alert('查無資料');
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
                         }
-                        
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                )
+                    )
+                } else {
+                    this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/search', formData,{emulateJSON: true}).then(
+                        success => {
+                            if( success.status == 200) {
+                                const resource = success.data.data
+                                if (resource != '') {
+                                    resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
+                                    resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
+                                    this.novel_data = resource
+                                } else {
+                                    this.novel_data = ''
+                                    alert('查無資料');
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    )
+                }
             }
         }
     }

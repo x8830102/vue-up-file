@@ -23,8 +23,14 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_short_report">{{short_novel_total}}</td>
-                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_novella_report">{{novella_total}}</td>
+                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_short_report">
+                      {{short_novel_total}}<br>
+                      <span>查看投稿紀錄>></span>
+                    </td>
+                    <td class="text-center px-0" style=" cursor: pointer;" @click="load_novella_report">
+                      {{novella_total}}<br>
+                      <span>查看投稿紀錄>></span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -419,5 +425,9 @@ li { display: inline-block; }
 
 .text-color {
   color: #173f7c;
+}
+tbody span {
+  font-size: 12px;
+  color: blue;
 }
 </style>
