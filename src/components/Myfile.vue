@@ -84,7 +84,7 @@
                       <input type="text" v-model:value="member_data.name" class="form-control form-control-sm" placeholder="請輸入你的姓名 (必填)" id="InputName" required="required"> </div>
                     <div class="form-group my-5">
                       <label for="exampleInputEmail1" class="text-dark">筆名</label>
-                      <input type="text" v-model:value="member_data.pan_name" class="form-control form-control-sm" id="InputNickName" placeholder="請輸入你想公開的筆名 (必填)"> </div>
+                      <input type="text" v-model:value="member_data.pan_name" class="form-control form-control-sm" id="InputNickName" placeholder="請輸入你想公開的筆名"> </div>
                     <div class="form-group my-5">
                       <label class="text-dark">聯絡信箱 *</label>
                       <input type="email" disabled="disabled" v-model:value="member_data.email" class="form-control form-control-sm" placeholder="請輸入你的聯絡信箱 (必填)" id="InputEmail" required="required"> </div>
@@ -161,7 +161,7 @@ import Navbar from './Navbar.vue'
     },
     methods: {
       save_member_data() {
-        if( (this.member_data.name && this.member_data.pan_name && this.member_data.phone) != '' ) {
+        if( (this.member_data.name && this.member_data.phone) != '' ) {
           this.$http.post('http://pansf-upload.panmedia.asia/console/member/update', this.member_data,{emulateJSON: true}).then(success => {
             console.log(success);
             this.success_show = true
