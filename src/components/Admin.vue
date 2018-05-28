@@ -43,10 +43,10 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.pan_name }}</td>
                         <td>{{ item.email }}</td>
-                        <td>{{ item.novel_type }}</td>
+                        <td><span class='badge badge-secondary'>{{ novel_type(index) }}</span></td>
                         <td>{{ (item.novel_file_size /1024/1024).toFixed(1) }} MB</td>
-                        <td><a :href="item.novel_file_name" download  class="btn btn-primary">下載</a></td>
-                        <td><a :href="item.agreement_file_name" download class="btn btn-primary">下載</a></td>
+                        <td><a :href="item.novel_file_name" :download="item.novel_no + '-作品'"  class="btn btn-primary">下載</a></td>
+                        <td><a :href="item.agreement_file_name" :download="item.novel_no + '-同意書'" class="btn btn-primary">下載</a></td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -106,7 +106,8 @@
             return_page_count() {
                 const page_count = Math.ceil(this.all_total / this.data_count) 
                 return page_count;
-            }
+            },
+           
         },
         methods:{
             submit(n) {
@@ -149,6 +150,14 @@
                             console.log(error);
                         }
                     )
+                }
+            },
+             novel_type(index) {
+                if( this.novel_data[index].novel_type == '1' )
+                {
+                    return '短篇小說'
+                } else {
+                    return '中短篇小說'
                 }
             }
         }
