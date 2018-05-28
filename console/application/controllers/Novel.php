@@ -287,7 +287,6 @@ class Novel extends CI_Controller
 					$_n['novel_file_name'] = $_l['novel_file_name'];
 					$_n['agreement_file_name'] = $_l['agreement_file_name'];
 					$feedback['data'][]=$_n;
-					$feedback['msggg'] = $pagestart . ' + ' . $data_count;
 				}
 	        }
 	        else

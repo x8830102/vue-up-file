@@ -36,7 +36,7 @@
                     <th>功能</th>
                 </thead>
                 <tbody>
-                    <tr v-if="novel_data != ''" v-for="( item,index ) in novel_data">
+                    <tr v-for="( item,index ) in novel_data">
                         <td>{{ index+1 }}</td>
                         <td>{{ item.up_date }}</td>
                         <td>{{ item.novel_no }}</td>
@@ -88,7 +88,7 @@
                     console.log(error)
                 })
 
-            this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/admin_all','',{emulateJSON: true}).then( success => {
+            this.$http.post('http://pansf-upload.panmedia.asia/console/novel/admin_all','',{emulateJSON: true}).then( success => {
                 if( success.status == 200 ) {
                     const resource = success.data.data
                     if (resource != '') {
@@ -112,7 +112,7 @@
             submit(n) {
                 const formData = new FormData($('form')[0])
                 if(n != null ){
-                    this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
+                    this.$http.post('http://pansf-upload.panmedia.asia/console/novel/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
                         success => {
                             if( success.status == 200) {
                                 const resource = success.data.data
@@ -131,7 +131,7 @@
                         }
                     )
                 } else {
-                    this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/search', formData,{emulateJSON: true}).then(
+                    this.$http.post('http://pansf-upload.panmedia.asia/console/novel/search', formData,{emulateJSON: true}).then(
                         success => {
                             if( success.status == 200) {
                                 const resource = success.data.data

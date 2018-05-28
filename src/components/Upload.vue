@@ -346,7 +346,7 @@ import Navbar from './Navbar.vue'
         $('#' + event.target.name + ' .loader').show()
         const formData = new FormData(event.target)
         formData.append('email',this.getCookie('email'));
-        this.$http.post('http://localhost/panmedia/panscifi-dev/console/novel/upload',formData,{
+        this.$http.post('http://pansf-upload.panmedia.asia/console/novel/upload',formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           },
