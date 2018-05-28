@@ -31,7 +31,7 @@
                  <hr>
                 <label for="exampleInputEmail1" class="text-dark">
                   <b>
-                    <b>上傳著作權同意書</b>
+                    <b>上傳同意書</b>
                   </b>
                 </label>
                 <div class="row">
@@ -84,7 +84,7 @@
               <hr>
                 <label for="exampleInputEmail1" class="text-dark">
                   <b>
-                    <b>上傳著作權同意書</b>
+                    <b>上傳同意書</b>
                   </b>
                 </label>
                 <div class="row">
@@ -163,7 +163,7 @@
                 <br> </h4>
               <p class="m-0 p-5" style="text-align: left">兩種獎項可同時參加，各以投稿一篇為限，同一篇稿件不得重複上傳，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
                 <br>1. 上傳作品 (上傳 docx 檔，檔案大小不得超過 10 MB)&nbsp;
-                <br>2. 上傳已簽署之著作權同意書 (上傳 pdf 或 jpg,png,tif 等圖片檔，
+                <br>2. 上傳已簽署之同意書 (上傳 pdf 或 jpg,png,tif 等圖片檔，
                 <a href="#">同意書下載連結</a>)</p>
               <div class="row">
                 <div class="col-md-12 text-center">
@@ -209,7 +209,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="bg-light text-center">著作版權同意書</td>
+                        <td class="bg-light text-center">同意書</td>
                         <td class="text-center" :class="short_novel_data.agreement != 'N/A' ? '' : 'text-info'">
                           <i class="fa fa-check fa-lg text-primary" v-if="short_novel_data.agreement != 'N/A'">
                           </i>{{short_novel_data.agreement}}
@@ -295,7 +295,6 @@ import Navbar from './Navbar.vue'
       })
 
       this.$http.post('http://pansf-upload.panmedia.asia/console/novel/my',{email: this.getCookie('email'), novel_type: 1},{emulateJSON: true}).then(success => {
-        console.log(success.data)
         if( success.data.success ) {
           this.short_novel_data.novel_no = success.data.data.novel_no
           this.short_novel_data.up_date = success.data.data.up_date.substr(0,16)
@@ -310,7 +309,6 @@ import Navbar from './Navbar.vue'
       })
 
       this.$http.post('http://pansf-upload.panmedia.asia/console/novel/my',{email: this.getCookie('email'), novel_type: 2},{emulateJSON: true}).then(success => {
-        console.log(success.data)
         if( success.data.success ) {
           this.novella_data.novel_no = success.data.data.novel_no
           this.novella_data.up_date = success.data.data.up_date.substr(0,16)
@@ -339,7 +337,6 @@ import Navbar from './Navbar.vue'
           this.file = ''
           return false
         }
-        console.log(files);
       },
       submit: function(event) {
         const form_id = event.target.name
@@ -354,7 +351,6 @@ import Navbar from './Navbar.vue'
         }).then(function (res) {
           $('#' + form_id + ' .loader').hide()
           $('#' + form_id + ' .text-success').show()
-          console.log(res)
           setTimeout("location.reload()", '1000')
           
         })
