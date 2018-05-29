@@ -33,11 +33,18 @@ export default {
     return {
     }
   },
+  created() {
+    this.$bus.$on('admin_login', (msg) => {
+        let expireDays = 1000 * 60 * 60 * 24 * 15
+        this.setCookie('success', msg.data.success, expireDays)
+    })
+  },
   methods: {
     submit(e){
         const formdata = new FormData(e.target)
         this.$http.post('http://pansf-upload.panmedia.asia/console/admin/login_admin',formdata,{emulateJSON: true}).then(success => {
             if( success.data.success ){
+                this.$bus.$emit('admin_login', success)
                 window.location = 'admin';
             }
             

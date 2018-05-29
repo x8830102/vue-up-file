@@ -283,7 +283,6 @@
               }
             }
           ).then( res => {
-            console.log(res)
             this.$bus.$emit('login_access',res)
           })
         },error => {

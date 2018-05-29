@@ -102,7 +102,12 @@
             },error => {
                 console.log(error);
             })
+        },mounted() {
+          if( this.getCookie('success') == null ) {
+            window.location = '/adminlogin';
+          }
         },
+
         computed: {
             return_page_count() {
                 const page_count = Math.ceil(this.all_total / this.data_count) 
