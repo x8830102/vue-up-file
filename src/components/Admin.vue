@@ -47,8 +47,8 @@
                         <td>{{ (item.novel_file_size /1024/1024).toFixed(1) }} MB</td>
                         <td><a :href="item.novel_file_name" :download="item.novel_no + '-作品'"  class="btn btn-primary">下載</a></td>
                         <td><a :href="item.agreement_file_name" :download="item.novel_no + '-同意書'" class="btn btn-primary">下載</a></td>
-                        <td><textarea cols="10" rows="1"></textarea></td>
-                        <td><a @click="save_note" class="btn btn-outline-primary">儲存</a></td>
+                        <td><textarea id="note" v-model="novel_data[index].note" name="note" cols="10" rows="1"></textarea></td>
+                        <td><a href='javascript:void(0)' @click="save_note(item.novel_no,index)" class="btn btn-outline-primary">儲存</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -89,7 +89,7 @@
                     console.log(error)
                 })
 
-            this.$http.post('http://pansf-upload.panmedia.asia/console/novel/admin_all','',{emulateJSON: true}).then( success => {
+            this.$http.post('http://pansf-upload.panmedia.asia/console/admin/admin_all','',{emulateJSON: true}).then( success => {
                 if( success.status == 200 ) {
                     const resource = success.data.data
                     if (resource != '') {
@@ -114,7 +114,7 @@
             submit(n) {
                 const formData = new FormData($('form')[0])
                 if(n != null ){
-                    this.$http.post('http://pansf-upload.panmedia.asia/console/novel/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
+                    this.$http.post('http://pansf-upload.panmedia.asia/console/admin/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
                         success => {
                             if( success.status == 200) {
                                 const resource = success.data.data
@@ -133,7 +133,7 @@
                         }
                     )
                 } else {
-                    this.$http.post('http://pansf-upload.panmedia.asia/console/novel/search', formData,{emulateJSON: true}).then(
+                    this.$http.post('http://pansf-upload.panmedia.asia/console/admin/search', formData,{emulateJSON: true}).then(
                         success => {
                             if( success.status == 200) {
                                 const resource = success.data.data
@@ -161,8 +161,10 @@
                     return '中短篇小說'
                 }
             },
-            save_note() {
-                
+            save_note(novel_no,index) {
+                this.$http.post('http://pansf-upload.panmedia.asia/console/admin/save_note',{novel_no:novel_no, note: this.novel_data[index].note},{emulateJSON: true}).then(success => {
+                    alert('儲存成功')
+                })
             }
         }
     }

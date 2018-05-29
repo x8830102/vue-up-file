@@ -3,11 +3,11 @@
         <Header></Header>
         <div class="row justify-content-center">
             <div class="col-lg-6 shadow-lg bg-cyan rounded form p-4">
-                <form action="">
+                <form @submit.prevent="submit">
                     <h2 class="text-left">泛科幻獎管理後台</h2>
                     <div class="form-group">
                         <label for="EmailAdderss">Email adderss</label>
-                        <input type="email" class="form-control" id="EmailAdderss" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" name="email" class="form-control" id="EmailAdderss" aria-describedby="emailHelp" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label for="Password">password</label>
@@ -31,6 +31,17 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    submit(e){
+        const formdata = new FormData(e.target)
+        this.$http.post('http://pansf-upload.panmedia.asia/console/admin/login_admin',formdata,{emulateJSON: true}).then(success => {
+            if( success.data.success ){
+                window.location = 'admin';
+            }
+            
+        })
     }
   }
 }

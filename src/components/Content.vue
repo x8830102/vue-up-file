@@ -361,10 +361,13 @@
         },error => {
           console.log(error)
           if( error.body.code == 45 ) {
-            this.alert_text = '信箱格式錯誤。';
+            this.alert_text = '信箱格式錯誤。'
             this.error_show = true;
           } else if ( error.body.code == 42 ) {
-            this.alert_text = '此信箱已經存在。';
+            this.alert_text = '此信箱已經存在。'
+            this.error_show = true
+          } else if (error.body.code == 43) {
+            this.alert_text = '密碼最少八個字。'
             this.error_show = true
           }
         })
