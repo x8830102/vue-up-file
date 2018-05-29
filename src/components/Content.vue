@@ -367,7 +367,7 @@
             this.alert_text = '此信箱已經存在。'
             this.error_show = true
           } else if (error.body.code == 43) {
-            this.alert_text = '密碼最少八個字。'
+            this.alert_text = '密碼需為 8~16 英數大小寫混合字元，請重設密碼。'
             this.error_show = true
           }
         })
