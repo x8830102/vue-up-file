@@ -47,7 +47,8 @@
                         <td>{{ (item.novel_file_size /1024/1024).toFixed(1) }} MB</td>
                         <td><a :href="item.novel_file_name" :download="item.novel_no + '-作品'"  class="btn btn-primary">下載</a></td>
                         <td><a :href="item.agreement_file_name" :download="item.novel_no + '-同意書'" class="btn btn-primary">下載</a></td>
-                        <td></td>
+                        <td><textarea cols="10" rows="1"></textarea></td>
+                        <td><a @click="save_note" class="btn btn-outline-primary">儲存</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -159,6 +160,9 @@
                 } else {
                     return '中短篇小說'
                 }
+            },
+            save_note() {
+                
             }
         }
     }

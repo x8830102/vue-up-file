@@ -357,10 +357,15 @@
 
         this.$http.post('https://members.panmedia.asia/api/server/register',this.register_item).then( success => {
           alert('註冊完成，請前往收信。')
+          setTimeout("location.reload()", '1000')
         },error => {
+          console.log(error)
           if( error.body.code == 45 ) {
             this.alert_text = '信箱格式錯誤。';
             this.error_show = true;
+          } else if ( error.body.code == 42 ) {
+            this.alert_text = '此信箱已經存在。';
+            this.error_show = true
           }
         })
       },
