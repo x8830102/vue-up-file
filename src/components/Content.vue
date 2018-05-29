@@ -185,7 +185,7 @@
                   <input type="password" v-model:value="register_item.password" class="form-control" placeholder="* 密碼"> </div>
                 <div class="form-group">
                   <input type="password" v-model:value="register_item.password2" class="form-control" placeholder="* 再次輸入密碼"> </div>
-                <button type="submit" @click="register" class="btn btn-block btn-primary">註冊</button>
+                <button type="button" @click="register" class="btn btn-block btn-primary">註冊</button>
               </form>
               <ul class="list-inline">
                 <a href="https://members.panmedia.asia/reset_password" target="_blank">
