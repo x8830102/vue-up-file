@@ -55,7 +55,7 @@ export default {
                 window.location = 'admin';
             } else {
                 this.error_show = true
-                this.alert_text = '無此帳號'
+                this.alert_text = '無此帳號或密碼錯誤。'
             }
             
         })

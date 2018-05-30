@@ -26,7 +26,6 @@ class Admin extends CI_Controller
                 $feedback['success'] = true;
             }
         }
-        $feedback['mas'] = $email;
         $this->ajax_feedback($feedback);;
     }
     public function admin_all()
