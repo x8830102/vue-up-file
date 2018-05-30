@@ -55,9 +55,9 @@
         </div>
         <nav aria-label="search result ">
           <ul class="pagination justify-content-end">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item" v-for="n in return_page_count"><a class="page-link" @click="submit(n)" href="#"> {{ n }} </a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item"><a class="page-link" @click="submit(current_page-1)" href="javascript:void(0)">Previous</a></li>
+            <li class="page-item" v-for="n in return_page_count"><a class="page-link" @click="submit(n)" href="javascript:void(0)"> {{ n }} </a></li>
+            <li class="page-item"><a class="page-link" @click="submit(current_page+1)" href="javascript:void(0)">Next</a></li>
           </ul>
         </nav>
     </div>
@@ -71,7 +71,9 @@
                 all_total: 0,
                 short_total: 0,
                 novella_total: 0,
-                data_count: 25,
+                current_page: 1,
+                page_count: 0,
+                data_count: 5,
                 novel_data: {},
                 page_item:{}
             }
@@ -89,7 +91,7 @@
                     console.log(error)
                 })
 
-            this.$http.post('http://pansf-upload.panmedia.asia/console/admin/admin_all','',{emulateJSON: true}).then( success => {
+            this.$http.get('http://pansf-upload.panmedia.asia/console/admin/admin_all?count=' + this.data_count).then( success => { console.log(success)
                 if( success.status == 200 ) {
                     const resource = success.data.data
                     if (resource != '') {
@@ -110,7 +112,8 @@
 
         computed: {
             return_page_count() {
-                const page_count = Math.ceil(this.all_total / this.data_count) 
+                const page_count = Math.ceil(this.all_total / this.data_count)
+                this.page_count = page_count;
                 return page_count;
             },
            
@@ -119,7 +122,14 @@
             submit(n) {
                 const formData = new FormData($('form')[0])
                 if(n != null ){
-                    this.$http.post('http://pansf-upload.panmedia.asia/console/admin/search?pagestart=' + ((n-1)*25) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
+                    if( n < 1){
+                        n = 1
+                    }
+                    if( n > this.page_count){
+                        n = this.page_count
+                    }
+                    this.current_page = n;
+                    this.$http.post('http://pansf-upload.panmedia.asia/console/admin/search?pagestart=' + ((n-1)*this.data_count) + '&count=' + this.data_count, formData,{emulateJSON: true}).then(
                         success => {
                             if( success.status == 200) {
                                 const resource = success.data.data

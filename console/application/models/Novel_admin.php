@@ -21,18 +21,19 @@ class Novel_admin extends CI_Model{
         return $query->row_array();
     }
 
-    public function get_novel_list()
+    public function get_novel_list($count = 0, $pagestart = 0)
     {
         $this->db->select('*');
         $this->db->from('pansf2018_novel');
         $this->db->join('pansf2018_member_data', 'pansf2018_novel.email = pansf2018_member_data.email', 'left');
         $this->db->where('pansf2018_member_data.status', 1);
         $this->db->order_by('up_date DESC');
+        $this->db->limit($count, $pagestart);
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function get_novel_list_by_search_key($key = null, $novel_type = 0, $pagestart = 0, $count = 25)
+    public function get_novel_list_by_search_key($key = null, $novel_type = 0, $pagestart = 0, $count = 0)
     {
         $this->db->select('*');
         $this->db->from('pansf2018_novel');
