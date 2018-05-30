@@ -20,8 +20,9 @@ class Admin extends CI_Controller
         $feedback = array('success' => false, 'data' => array(), 'msg' => '');
 
         $email = $this->input->post('email', true);
+        $password = $this->input->post('passowrd', true);
         if ($member = $this->novel_admin->get_login_result($email)) {
-            if ($member['admin'] == 1 && $member['status'] == 1) {
+            if ($member['admin'] == 1 && $member['status'] == 1 && $member['password'] == $password) {
                 $feedback['success'] = true;
             }
         }

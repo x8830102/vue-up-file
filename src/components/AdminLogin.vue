@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Password">password</label>
-                        <input type="password"  class="form-control" id="Password" aria-describedby="password" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="Password" aria-describedby="password" placeholder="Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
