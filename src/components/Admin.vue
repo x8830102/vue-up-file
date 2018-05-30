@@ -73,7 +73,7 @@
                 novella_total: 0,
                 current_page: 1,
                 page_count: 0,
-                data_count: 5,
+                data_count: 25,
                 novel_data: [],
                 page_item:{}
             }
@@ -96,9 +96,11 @@
                     const resource = success.data.data
                     if (resource != '') {
                         for( var i=0; i<this.data_count; i++){
-                            resource[i].novel_file_name = '/console/assets/file/source/' + resource[i].novel_file_name
-                            resource[i].agreement_file_name = '/console/assets/file/uploads/' + resource[i].agreement_file_name
-                            this.novel_data[i] = resource[i]
+                            if( resource[i] !=null){
+                                resource[i].novel_file_name = '/console/assets/file/source/' + resource[i].novel_file_name
+                                resource[i].agreement_file_name = '/console/assets/file/uploads/' + resource[i].agreement_file_name
+                                this.novel_data[i] = resource[i]
+                            }
                         }
                         this.all_total = resource.length
                     }
