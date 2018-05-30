@@ -74,7 +74,7 @@
                 current_page: 1,
                 page_count: 0,
                 data_count: 5,
-                novel_data: {},
+                novel_data: [],
                 page_item:{}
             }
         },
@@ -91,13 +91,15 @@
                     console.log(error)
                 })
 
-            this.$http.get('http://pansf-upload.panmedia.asia/console/admin/admin_all?count=' + this.data_count).then( success => { console.log(success)
+            this.$http.get('http://pansf-upload.panmedia.asia/console/admin/admin_all').then( success => { 
                 if( success.status == 200 ) {
                     const resource = success.data.data
                     if (resource != '') {
-                        resource[0].novel_file_name = '/console/assets/file/source/' + resource[0].novel_file_name
-                        resource[0].agreement_file_name = '/console/assets/file/uploads/' + resource[0].agreement_file_name
-                        this.novel_data = resource
+                        for( var i=0; i<this.data_count; i++){
+                            resource[i].novel_file_name = '/console/assets/file/source/' + resource[i].novel_file_name
+                            resource[i].agreement_file_name = '/console/assets/file/uploads/' + resource[i].agreement_file_name
+                            this.novel_data[i] = resource[i]
+                        }
                         this.all_total = resource.length
                     }
                 }

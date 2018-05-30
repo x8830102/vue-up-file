@@ -33,11 +33,9 @@ class Admin extends CI_Controller
         $this->header_cross_domain();
         $this->load->model('novel_admin');
         $feedback = array('success' => false, 'data' => array(), 'msg' => '');
-
-        $data_count = $this->input->get('count', true);
         
         $feedback['success'] = true;
-        if ($log = $this->novel_admin->get_novel_list($data_count)) {
+        if ($log = $this->novel_admin->get_novel_list()) {
             foreach ($log as $_l) {
                 $_n = array();
                 $_n['novel_no'] = $_l['novel_no'];
