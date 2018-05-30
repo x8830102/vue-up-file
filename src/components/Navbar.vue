@@ -10,22 +10,22 @@
             <a class="nav-link" href="http://pansf.panmedia.asia/">首頁</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://pansf.panmedia.asia/2">徵文啟事</a>
+            <a class="nav-link" href="http://pansf.panmedia.asia/info">徵文啟事</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://pansf.panmedia.asia/3">投稿注意事項</a>
+            <a class="nav-link" href="http://pansf.panmedia.asia/noties">投稿注意事項</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://pansf.panmedia.asia/4">徵文與活動報名</a>
+            <a class="nav-link" href="http://pansf.panmedia.asia/register">徵文與活動報名</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="/">作品上傳</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://pansf.panmedia.asia/5">合作夥伴</a>
+            <a class="nav-link" href="http://pansf.panmedia.asia/partner">合作夥伴</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://pansf.panmedia.asia/6">聯繫總部</a>
+            <a class="nav-link" href="http://pansf.panmedia.asia/contect">聯繫總部</a>
           </li>
         </ul>
         <a class="btn navbar-btn ml-2 text-white btn-primary login-btn" data-toggle="modal" data-target="#mode_login">註冊 / 登入&nbsp;

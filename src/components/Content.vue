@@ -50,17 +50,15 @@
               <span>×</span>
             </button>
           </div>
-          <table class="table">
+          <table class="table text-center">
             <thead>
-              <th>#</th>
-              <th>上傳時間</th>
               <th>投稿編號</th>
+              <th>上傳時間</th>
             </thead>
             <tbody>
               <tr v-for="( item,index ) in short_novel_data">
-                <td>{{ index+1 }}</td>
-                <td>{{ item.up_date }}</td>
                 <td>{{ item.novel_no }}</td>
+                <td>{{ item.up_date }}</td>
               </tr>
             </tbody>
            
@@ -82,17 +80,15 @@
               <span>×</span>
             </button>
           </div>
-          <table class="table">
+          <table class="table text-center">
             <thead>
-              <th>#</th>
-              <th>上傳時間</th>
               <th>投稿編號</th>
+              <th>上傳時間</th>
             </thead>
             <tbody>
               <tr v-for="( item,index ) in novella_data">
-                <td>{{ index+1 }}</td>
-                <td>{{ item.up_date }}</td>
                 <td>{{ item.novel_no }}</td>
+                <td>{{ item.up_date }}</td>
               </tr>
             </tbody>
            
@@ -355,7 +351,7 @@
         }
 
         this.$http.post('https://members.panmedia.asia/api/server/register',this.register_item).then( success => {
-          alert('註冊完成，請前往收信。')
+          alert('請前往收信，驗證完信箱後才算完成註冊。')
           setTimeout("location.reload()", '1000')
         },error => {
           console.log(error)

@@ -44,7 +44,7 @@
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
-                    <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a>&nbsp;與同獎項不得重複投稿規則。</label>
+                    <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a></label>
                     <input type="hidden" name="up_type" value="1">
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
-                    <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a>&nbsp;與同獎項不得重複投稿規則。</label>
+                    <a href="http://pansf.panmedia.asia/3" target="_blank">稿件注意事項</a></label>
                     <input type="hidden" name="up_type" value="2">
                 </div>
             </div>
@@ -161,7 +161,7 @@
                   <strong>作品上傳</strong>
                 </b>
                 <br> </h4>
-              <p class="m-0 p-5" style="text-align: left">兩種獎項可同時參加，各以投稿一篇為限，同一篇稿件不得重複上傳，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
+              <p class="m-0 p-5" style="text-align: left">兩種獎項可同時參加，各以投稿一篇為限，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
                 <br>1. 上傳作品 (上傳 docx 檔，檔案大小不得超過 10 MB)&nbsp;
                 <br>2. 上傳已簽署之同意書 (上傳 pdf 或 jpg,png,tif 等圖片檔，
                 <a href="#">同意書下載連結</a>)</p>
@@ -227,13 +227,13 @@
                         <td></td>
                         <td class="">
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data.novel_no == 'N/A'" data-target="#short_novel_dialog" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="short_novel_data.novel_no == 'N/A'" data-target="#short_novel_dialog" data-toggle="modal">開始上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
                         <td>
                           <p>
-                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="novella_data.novel_no == 'N/A'" data-target="#novella_dialog" data-toggle="modal">前往上傳 </a>
+                            <a class="btn navbar-btn ml-2 text-white btn-secondary" v-if="novella_data.novel_no == 'N/A'" data-target="#novella_dialog" data-toggle="modal">開始上傳 </a>
                             <a href="#" class="btn btn-outline-info disabled" v-else>完成上傳</a>
                           </p>
                         </td>
