@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-感謝您的投稿，已經收到您投稿的作品，隨信附上您上傳的作品檔案，如有疑問歡迎來信洽詢 pansf@panmedia.asia 。<br />
+感謝您的投稿，已經收到您投稿的作品，隨信附上您上傳的作品檔案。倘若您發現收到的檔案有問題，如出現亂碼等情況，請於收信後48小時內聯絡主辦單位(pansf@panmedia.asia)，並具體述明檔案問題，主辦單位將盡快回覆補救辦法。<br />
 <br />
 <br />
 投稿時間：<?php echo $up_date;?><br />
