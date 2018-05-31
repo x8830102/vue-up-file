@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-md-8 offset-md-2">
             <p class="m-0 p-5">請先於「
-              <a href="http://pansf.panmedia.asia/register" target="_blank">徵文與活動報名</a>」專區報名後，再於期限內（二○一八年六月一日至八月三十一日 中午12 :00（GMT+8）），於作品上傳區繳交作品。填寫資料請與報名資料相同，</p>
+              <a href="http://pansf.panmedia.asia/register" target="_blank">徵文與活動報名</a>」專區報名後，再於期限內（二○一八年六月一日至八月三十一日 中午12 :00（GMT+8）），於作品上傳區繳交作品。填寫資料請與報名資料相同。</p>
           </div>
         </div>
         <div class="modal" id="upload_alert">

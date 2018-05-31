@@ -44,7 +44,7 @@
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
-                    <a href="http://pansf.panmedia.asia/noties" target="_blank">稿件注意事項</a></label>
+                    <a href="http://pansf.panmedia.asia/noties" target="_blank">投稿注意事項</a></label>
                     <input type="hidden" name="up_type" value="1">
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="form-check mt-2 text-dark py-3">
                   <input class="form-check-input" type="checkbox" id="exampleCheck1" value="on" required="required">
                   <label class="form-check-label text-danger" for="exampleCheck1">我已閱讀並同意此
-                    <a href="http://pansf.panmedia.asia/noties" target="_blank">稿件注意事項</a></label>
+                    <a href="http://pansf.panmedia.asia/noties" target="_blank">投稿注意事項</a></label>
                     <input type="hidden" name="up_type" value="2">
                 </div>
             </div>
