@@ -148,7 +148,7 @@ import Navbar from './Navbar.vue'
       this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
         if ( success.body.success == true ) {
           this.fill_in = true
-          this.member_data.name = success.data.data
+          this.member_data = success.data.data
         } else {
           if( success.body.code === 99 ) {
             //cookie error logout
