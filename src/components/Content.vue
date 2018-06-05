@@ -219,7 +219,6 @@
         error_show: false,
         fill_in: false,
         pm_login_item: {
-          client_id: '9638357746234817',
           identifier: '',
           password: ''
         },
@@ -257,6 +256,7 @@
       })
 
       this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.getCookie('email')},{emulateJSON: true}).then(success => {
+        console.log(this.getCookie('email'))
         if ( success.body.success == true ) {
           this.fill_in = true
         }
@@ -269,18 +269,10 @@
     },
     methods:{
       pm_login() {
-        this.$http.post('https://members.panmedia.asia/api/server/login',this.pm_login_item).then( success => {
+        this.$http.post('http://pansf-upload.panmedia.asia/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
           this.error_show = false;
-          //get member profile
-          this.$http.get(
-            'https://members.panmedia.asia/api/v1/profile',
-            { headers: {
-                Authorization: 'Bearer ' + success.body.message.access_token
-              }
-            }
-          ).then( res => {
-            this.$bus.$emit('login_access',res)
-          })
+          console.log(success)
+          this.$bus.$emit('login_access',success)
         },error => {
           console.log(error)
           this.login_error(error)

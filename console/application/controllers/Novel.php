@@ -26,12 +26,12 @@ class Novel extends CI_Controller
 	public function upload()
 	{
         $this->header_cross_domain();
-        $feedback = array('success' => false, 'msg' => '');
+        $feedback = array('success' => false, 'msg' => '', 'code' => 0);
 
         $this->load->model(['member_data', 'member_novel']);
 
 
-		if($this->email = $this->input->post('email', true))
+		if($this->email == $this->input->post('email', true))
 		{
 			if($email = $this->input->post('email', true))
 			{
@@ -163,6 +163,7 @@ class Novel extends CI_Controller
 		else
 		{
 			$feedback['msg'] = '身份不正確或資訊已過期';
+			$feedback['code'] = 99;
 		}
 
         $this->ajax_feedback($feedback);
@@ -171,12 +172,12 @@ class Novel extends CI_Controller
 	public function my()
 	{
         $this->header_cross_domain();
-        $feedback = array('success' => false, 'msg' => '');
+        $feedback = array('success' => false, 'msg' => '', 'code' => 0);
 
 
         $this->load->model(['member_data', 'member_novel']);
 
-		if($this->email = $this->input->post('email', true))
+		if($this->email == $this->input->post('email', true))
 		{
 			if($email = $this->input->post('email', true))
 			{
@@ -209,6 +210,7 @@ class Novel extends CI_Controller
 		else
 		{
 			$feedback['msg'] = '身份不正確或資訊已過期';
+			$feedback['code'] = 99;
 		}
 
         $this->ajax_feedback($feedback);

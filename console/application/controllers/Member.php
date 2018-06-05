@@ -18,11 +18,11 @@ class Member extends CI_Controller {
 	public function update()
 	{
         $this->header_cross_domain();
-        $feedback = array('success' => false, 'msg' => '');
+        $feedback = array('success' => false, 'msg' => '', 'code' => 0);
 
         $this->load->model(['member_data']);
 
-		if($this->email = $this->input->post('email', true))
+		if($this->email == $this->input->post('email', true))
 		{
 			if($email = $this->input->post('email', true))
 			{
@@ -80,6 +80,7 @@ class Member extends CI_Controller {
 		else
 		{
 			$feedback['msg'] = '身份不正確或資訊已過期';
+            $feedback['code'] = 99;
 		}
 
         $this->ajax_feedback($feedback);
@@ -88,12 +89,12 @@ class Member extends CI_Controller {
 	public function info()
 	{
         $this->header_cross_domain();
-        $feedback = array('success' => false, 'msg' => '');
+        $feedback = array('success' => false, 'msg' => '', 'code' => '');
 
 
         $this->load->model(['member_data']);
 
-		if($this->email = $this->input->post('email', true))
+		if($this->email == $this->input->post('email', true))
 		{
 			if($email = $this->input->post('email', true))
 			{
@@ -122,6 +123,7 @@ class Member extends CI_Controller {
 		else
 		{
 			$feedback['msg'] = '身份不正確或資訊已過期';
+            $feedback['code'] = 99;
 		}
 
         $this->ajax_feedback($feedback);
@@ -144,13 +146,14 @@ class Member extends CI_Controller {
 			if($result_array['code']==21 || $result_array['code']==22)
 			{
 				$authorization = $result_array['message']['access_token'];
-				$api_profile = 'https://members.panmedia.asia/api/v1/profile?fields=id,email';
+				$api_profile = 'https://members.panmedia.asia/api/v1/profile?fields=id,email,nickname';
 				$server_output = $this->curl_get($api_profile, $authorization);
 				$profile_result_array = json_decode($server_output, true);
 				if($profile_result_array['status']['code']==0)
 				{
-					$this->session->set_userdata('email', $profile_result_array['user']['email']);
+					$this->session->set_userdata('email', 'paku@panmedia.asia');
 					$feedback['email'] = $profile_result_array['user']['email'];
+                    $feedback['nickname'] = $profile_result_array['user']['nickname'];
 					$feedback['success'] = true;
 				}
 				else

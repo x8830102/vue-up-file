@@ -148,9 +148,14 @@ import Navbar from './Navbar.vue'
       this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.member_data.email},{emulateJSON: true}).then(success => {
         if ( success.body.success == true ) {
           this.fill_in = true
-          this.member_data.name = success.data.data.name
-          this.member_data.pan_name = success.data.data.pan_name
-          this.member_data.phone = success.data.data.phone
+          this.member_data.name = success.data.data
+        } else {
+          if( success.body.code === 99 ) {
+            //cookie error logout
+            this.delCookie('username')
+            this.delCookie('email')
+            window.location = '/';
+          }
         }
       })
     },
@@ -163,10 +168,19 @@ import Navbar from './Navbar.vue'
       save_member_data() {
         if( (this.member_data.name && this.member_data.phone) != '' ) {
           this.$http.post('http://pansf-upload.panmedia.asia/console/member/update', this.member_data,{emulateJSON: true}).then(success => {
-            console.log(success);
-            this.success_show = true
-            this.fill_in = true
-            this.alert_text = '更新成功。'
+            if ( success.body.success == true ) {
+              console.log(success);
+              this.success_show = true
+              this.fill_in = true
+              this.alert_text = '更新成功。'
+            } else {
+              if( success.body.code === 99 ) {
+                //cookie error logout
+                this.delCookie('username')
+                this.delCookie('email')
+                window.location = '/';
+              }
+            }
           }),error => {
             console.log(error);
           }

@@ -302,6 +302,13 @@ import Navbar from './Navbar.vue'
 
           if( success.body.data.agreement_file_name ) {
             this.short_novel_data.agreement = ''
+          } else {
+            if( success.body.code === 99 ) {
+              //cookie error logout
+              this.delCookie('username')
+              this.delCookie('email')
+              window.location = '/';
+            }
           }
         }
       },error => {
@@ -316,6 +323,13 @@ import Navbar from './Navbar.vue'
 
           if( success.body.data.agreement_file_name ) {
             this.novella_data.agreement = ''
+          }
+        } else {
+          if( success.body.code === 99 ) {
+            //cookie error logout
+            this.delCookie('username')
+            this.delCookie('email')
+            window.location = '/';
           }
         }
       },error => {
@@ -349,10 +363,19 @@ import Navbar from './Navbar.vue'
           },
           emulateJSON: true
         }).then(function (res) {
-          $('#' + form_id + ' .loader').hide()
-          $('#' + form_id + ' .text-success').show()
-          setTimeout("location.reload()", '1000')
-          
+          if( res.data.success )
+          {
+            $('#' + form_id + ' .loader').hide()
+            $('#' + form_id + ' .text-success').show()
+            setTimeout("location.reload()", '1000')
+          } else {
+            if( success.body.code === 99 ) {
+              //cookie error logout
+              this.delCookie('username')
+              this.delCookie('email')
+              window.location = '/';
+            }
+          }
         })
       },
 
