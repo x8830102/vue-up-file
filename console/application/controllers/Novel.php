@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Novel extends CI_Controller
 {
+	var $email = null;
 	var $max_file_upload = 0;
 	var $libraryFolder = '';
 	var $sourceFolder = '';
@@ -13,6 +14,8 @@ class Novel extends CI_Controller
         $this->max_file_upload =1024*1024*10;
 		$this->libraryFolder = FCPATH . "assets/file/uploads/";
 		$this->sourceFolder = FCPATH . "assets/file/source/";
+		
+        $this->email = $this->session->userdata('email');
     }
 
 	public function index()
@@ -27,131 +30,139 @@ class Novel extends CI_Controller
 
         $this->load->model(['member_data', 'member_novel']);
 
-		if($email = $this->input->post('email', true))
+
+		if($this->email = $this->input->post('email', true))
 		{
-			if (valid_email($email))
+			if($email = $this->input->post('email', true))
 			{
-				if($member = $this->member_data->get_row_by_email($email))
+				if (valid_email($email))
 				{
-					// 檔案檢查
-					//var_dump($_FILES['novel']);exit();
-					//$file = $_FILES;
-					$files = $_FILES['novel'];
-					$originalFile = empty($files['tmp_name'])? $files['name']:$files['tmp_name'];
-					$tmp = explode(".", $files['name']);
-					$new_name = uniqid().'.'.$tmp[COUNT($tmp)-1];
-					$sourceFile = rtrim($this->sourceFolder,'/') . '/' .$new_name;
-
-					if(move_uploaded_file($originalFile,$sourceFile))
+					if($member = $this->member_data->get_row_by_email($email))
 					{
-						$file_size = filesize($sourceFile);
-						if($file_size <= $this->max_file_upload)
+						// 檔案檢查
+						//var_dump($_FILES['novel']);exit();
+						//$file = $_FILES;
+						$files = $_FILES['novel'];
+						$originalFile = empty($files['tmp_name'])? $files['name']:$files['tmp_name'];
+						$tmp = explode(".", $files['name']);
+						$new_name = uniqid().'.'.$tmp[COUNT($tmp)-1];
+						$sourceFile = rtrim($this->sourceFolder,'/') . '/' .$new_name;
+
+						if(move_uploaded_file($originalFile,$sourceFile))
 						{
-							$novel_type = $this->input->post('up_type', true);
-							$novel_type = $novel_type!=2? 1:2;
-							if($log = $this->member_novel->get_row_by_email_and_type($email, $novel_type))
+							$file_size = filesize($sourceFile);
+							if($file_size <= $this->max_file_upload)
 							{
-								// 存在上傳紀錄，下架舊的先
-								$data_update = array();
-								$data_update['status'] = 0;
-								$this->member_novel->update_row_by_sn($log['sn'], $data_update);
-							}
+								$novel_type = $this->input->post('up_type', true);
+								$novel_type = $novel_type!=2? 1:2;
+								if($log = $this->member_novel->get_row_by_email_and_type($email, $novel_type))
+								{
+									// 存在上傳紀錄，下架舊的先
+									$data_update = array();
+									$data_update['status'] = 0;
+									$this->member_novel->update_row_by_sn($log['sn'], $data_update);
+								}
 
-							$agreement_file = $_FILES['agreement'];
-							$originalFile = empty($agreement_file['tmp_name'])? $agreement_file['name']:$agreement_file['tmp_name'];
-							$tmp = explode(".", $agreement_file['name']);
-							$new_agreement_name = uniqid().'.'.$tmp[COUNT($tmp)-1];
-							$agreementFile = rtrim($this->libraryFolder,'/') . '/' .$new_agreement_name;
+								$agreement_file = $_FILES['agreement'];
+								$originalFile = empty($agreement_file['tmp_name'])? $agreement_file['name']:$agreement_file['tmp_name'];
+								$tmp = explode(".", $agreement_file['name']);
+								$new_agreement_name = uniqid().'.'.$tmp[COUNT($tmp)-1];
+								$agreementFile = rtrim($this->libraryFolder,'/') . '/' .$new_agreement_name;
 
-							$agreement_file_name = '';
-							if(move_uploaded_file($originalFile,$agreementFile))
-							{
-								$agreement_file_name = $new_agreement_name;
-							}
+								$agreement_file_name = '';
+								if(move_uploaded_file($originalFile,$agreementFile))
+								{
+									$agreement_file_name = $new_agreement_name;
+								}
 
-							$novel_no = $this->member_novel->get_count_by_type($novel_type)+1;
+								$novel_no = $this->member_novel->get_count_by_type($novel_type)+1;
 
-							$data_insert = array();
-							$data_insert['email'] = $email;
-							$data_insert['novel_type'] = $novel_type;
-							$data_insert['novel_no'] = ($novel_type==1? "A":"B").sprintf("%04d", $novel_no);
-							$data_insert['novel_file_name'] = $new_name;
-							$data_insert['novel_file_size'] = $file_size;
-							$data_insert['agreement_file_name'] = $agreement_file_name;
-							$data_insert['ip'] = $this->input->ip_address();
-							$data_insert['up_date'] = date('Y-m-d H:i:s');
-							if($this->member_novel->insert_row($data_insert))
-							{
-								$feedback['success'] = true;
-								$feedback['msg'] = '上傳成功';
-
-
-	                			$bcc = array();
-	                			$this->load->library("mailgun");
-
-	                			$page_data = array();
-								$page_data['email'] = $email;
-								$page_data['novel_no'] = $data_insert['novel_no'];
-								$page_data['up_date'] = $data_insert['up_date'];
-								$page_data['novel_type_name'] = $novel_type==1? '短篇小說':'中短篇小說';
-								$page_data['mamber_name'] = $member['name'];
-								$page_data['mamber_pan_name'] = $member['pan_name']? $member['pan_name']:'';
-
-
-								$data_mail = array();
-								$data_mail['toemail'] = $email;
-								$data_mail['subject'] = '[泛科幻獎] '.$member['name'].'，感謝您的投稿！';
-								$data_mail['body'] = $this->load->view('email_novel_acception', $page_data, true);
-								$data_mail['controller'] = $this->uri->uri_string();
-								$data_mail['success'] = 0;
-
-								$attachment_file = $this->sourceFolder.$data_insert['novel_file_name'];
-
-	                			$bcc = array('jerrywu@panmedia.asia');
-	                			$this->load->library("mailgun");
-		                        if (!$this->mailgun->service_mail($data_mail['toemail'], $data_mail['subject'], $data_mail['body'], $bcc, '系統管理員', $attachment_file, $data_insert['novel_no'].'_'.$data_insert['novel_file_name']))
-		                        {
-		                            $data_mail["server_log"] = $this->mailgun->msg_error;
-		                        } 
-		                        else
-		                        {
-		                            $data_mail["success"] = 1;
-		                            $data_mail["time_sent"] = date('Y-m-d H:i:s');
+								$data_insert = array();
+								$data_insert['email'] = $email;
+								$data_insert['novel_type'] = $novel_type;
+								$data_insert['novel_no'] = ($novel_type==1? "A":"B").sprintf("%04d", $novel_no);
+								$data_insert['novel_file_name'] = $new_name;
+								$data_insert['novel_file_size'] = $file_size;
+								$data_insert['agreement_file_name'] = $agreement_file_name;
+								$data_insert['ip'] = $this->input->ip_address();
+								$data_insert['up_date'] = date('Y-m-d H:i:s');
+								if($this->member_novel->insert_row($data_insert))
+								{
 									$feedback['success'] = true;
-		                        }
+									$feedback['msg'] = '上傳成功';
 
-								$this->load->model("log_mail");
-								$this->log_mail->insert_row($data_mail);
+
+		                			$bcc = array();
+		                			$this->load->library("mailgun");
+
+		                			$page_data = array();
+									$page_data['email'] = $email;
+									$page_data['novel_no'] = $data_insert['novel_no'];
+									$page_data['up_date'] = $data_insert['up_date'];
+									$page_data['novel_type_name'] = $novel_type==1? '短篇小說':'中短篇小說';
+									$page_data['mamber_name'] = $member['name'];
+									$page_data['mamber_pan_name'] = $member['pan_name']? $member['pan_name']:'';
+
+
+									$data_mail = array();
+									$data_mail['toemail'] = $email;
+									$data_mail['subject'] = '[泛科幻獎] '.$member['name'].'，感謝您的投稿！';
+									$data_mail['body'] = $this->load->view('email_novel_acception', $page_data, true);
+									$data_mail['controller'] = $this->uri->uri_string();
+									$data_mail['success'] = 0;
+
+									$attachment_file = $this->sourceFolder.$data_insert['novel_file_name'];
+
+		                			$bcc = array('jerrywu@panmedia.asia');
+		                			$this->load->library("mailgun");
+			                        if (!$this->mailgun->service_mail($data_mail['toemail'], $data_mail['subject'], $data_mail['body'], $bcc, '系統管理員', $attachment_file, $data_insert['novel_no'].'_'.$data_insert['novel_file_name']))
+			                        {
+			                            $data_mail["server_log"] = $this->mailgun->msg_error;
+			                        } 
+			                        else
+			                        {
+			                            $data_mail["success"] = 1;
+			                            $data_mail["time_sent"] = date('Y-m-d H:i:s');
+										$feedback['success'] = true;
+			                        }
+
+									$this->load->model("log_mail");
+									$this->log_mail->insert_row($data_mail);
+								}
+								else
+								{
+									$feedback['msg'] = '上傳失敗';
+								}
+
 							}
 							else
 							{
-								$feedback['msg'] = '上傳失敗';
+								$feedback['msg'] = '檔案超過 10mb';
 							}
-
 						}
 						else
 						{
-							$feedback['msg'] = '檔案超過 10mb';
+							$feedback['msg'] = '檔案可能超過系統限制大小';
 						}
 					}
 					else
 					{
-						$feedback['msg'] = '檔案可能超過系統限制大小';
+						$feedback['msg'] = '帳號不存在';
 					}
 				}
 				else
 				{
-					$feedback['msg'] = '帳號不存在';
+					$feedback['msg'] = '不是有效的 Email 格式';
 				}
 			}
 			else
 			{
-				$feedback['msg'] = '不是有效的 Email 格式';
+				$feedback['msg'] = 'Email 不存在';
 			}
 		}
 		else
 		{
-			$feedback['msg'] = 'Email 不存在';
+			$feedback['msg'] = '身份不正確或資訊已過期';
 		}
 
         $this->ajax_feedback($feedback);
@@ -165,32 +176,39 @@ class Novel extends CI_Controller
 
         $this->load->model(['member_data', 'member_novel']);
 
-		if($email = $this->input->post('email', true))
+		if($this->email = $this->input->post('email', true))
 		{
-			if (valid_email($email))
+			if($email = $this->input->post('email', true))
 			{
-				if($log = $this->member_novel->get_row_by_email_and_type($email, $this->input->post('novel_type', true)))
+				if (valid_email($email))
 				{
-					$feedback['success'] = true;
-					$feedback['data'] = $log;
+					if($log = $this->member_novel->get_row_by_email_and_type($email, $this->input->post('novel_type', true)))
+					{
+						$feedback['success'] = true;
+						$feedback['data'] = $log;
+					}
+					else
+					{
+						$feedback['msg'] = '上傳紀錄不存在';
+						$feedback['post_data'] = array(
+							'email' => $this->input->post('email', true),
+							'novel_type' => $this->input->post('novel_type', true)
+						);
+					}
 				}
 				else
 				{
-					$feedback['msg'] = '上傳紀錄不存在';
-					$feedback['post_data'] = array(
-						'email' => $this->input->post('email', true),
-						'novel_type' => $this->input->post('novel_type', true)
-					);
+					$feedback['msg'] = '不是有效的 Email 格式';
 				}
 			}
 			else
 			{
-				$feedback['msg'] = '不是有效的 Email 格式';
+				$feedback['msg'] = 'Email 不存在';
 			}
 		}
 		else
 		{
-			$feedback['msg'] = 'Email 不存在';
+			$feedback['msg'] = '身份不正確或資訊已過期';
 		}
 
         $this->ajax_feedback($feedback);
