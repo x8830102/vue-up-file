@@ -246,6 +246,7 @@
     },
     created() {
       this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 1},{emulateJSON: true}).then( success => {
+        console.log(success)
         this.short_novel_data = success.data.data
         this.short_novel_total = success.data.data.length
       })
@@ -256,7 +257,6 @@
       })
 
       this.$http.post('http://pansf-upload.panmedia.asia/console/member/info',{email: this.getCookie('email')},{emulateJSON: true}).then(success => {
-        console.log(this.getCookie('email'))
         if ( success.body.success == true ) {
           this.fill_in = true
         }
@@ -269,10 +269,10 @@
     },
     methods:{
       pm_login() {
-        this.$http.post('http://pansf-upload.panmedia.asia/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
+        this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
           this.error_show = false;
           console.log(success)
-          this.$bus.$emit('login_access',success)
+          // this.$bus.$emit('login_access',success)
         },error => {
           console.log(error)
           this.login_error(error)
@@ -293,7 +293,8 @@
                 }
               }
             ).then( res => {
-              this.$bus.$emit('login_access',res)
+              console.log(res)
+              this.$bus.$emit('Oauth_login_access',res)
             })
           },error => {
             this.login_error(error)
@@ -319,7 +320,7 @@
                 }
               }
               ).then( res => {
-                this.$bus.$emit('login_access',res)
+                this.$bus.$emit('Oauth_login_access',res)
               })
             },error =>{
               this.login_error(error)
