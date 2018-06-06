@@ -173,7 +173,7 @@ class Member extends CI_Controller {
             $profile_result_array = json_decode($server_output, true);
             if($profile_result_array['status']['code']==0)
             {
-                $this->session->set_userdata('email', 'paku@panmedia.asia');
+                $this->session->set_userdata('email', $profile_result_array['user']['email']);
                 $feedback['email'] = $profile_result_array['user']['email'];
                 $feedback['nickname'] = $profile_result_array['user']['nickname'];
                 $feedback['success'] = true;
