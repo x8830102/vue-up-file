@@ -266,7 +266,7 @@
     },
     methods:{
       pm_login() {
-        this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
+        this.$http.post('http://pansf-upload.panmedia.asia/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
           if( success.body.success == true ) {
             this.error_show = false;
             this.$bus.$emit('login_access',success)
@@ -283,7 +283,7 @@
           if( response.status === 'connected' ) {
             this.FB_login_item.access_token = response.authResponse.accessToken;
           }
-          this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.FB_login_item,{emulateJSON: true}).then( success => {
+          this.$http.post('http://pansf-upload.panmedia.asia/console/member/signin',this.FB_login_item,{emulateJSON: true}).then( success => {
             if( success.body.success == true ) {
               this.error_show = false;
               this.$bus.$emit('login_access',success)
@@ -303,7 +303,7 @@
           })
           auth2.attachClickHandler(this.$refs.google_login, {}, googleUser => {
             this.Google_login_item.access_token = googleUser.getAuthResponse().id_token;
-            this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.Google_login_item,{emulateJSON: true}).then( success => {
+            this.$http.post('http://pansf-upload.panmedia.asia/console/member/signin',this.Google_login_item,{emulateJSON: true}).then( success => {
               if( success.body.success == true ) {
                 this.error_show = false;
                 this.$bus.$emit('login_access',success)
