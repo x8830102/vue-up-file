@@ -224,12 +224,10 @@
         },
         FB_login_item:{
           provider: 'facebook',
-          client_id: '9638357746234817',
           access_token: ''
         },
         Google_login_item:{
           provider: 'google',
-          client_id: '9638357746234817',
           access_token: ''
         },
         register_item: {
@@ -246,7 +244,6 @@
     },
     created() {
       this.$http.post('http://pansf-upload.panmedia.asia/console/novel/all',{novel_type: 1},{emulateJSON: true}).then( success => {
-        console.log(success)
         this.short_novel_data = success.data.data
         this.short_novel_total = success.data.data.length
       })
@@ -270,9 +267,12 @@
     methods:{
       pm_login() {
         this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.pm_login_item,{emulateJSON: true}).then( success => {
-          this.error_show = false;
-          console.log(success)
-          // this.$bus.$emit('login_access',success)
+          if( success.body.success == true ) {
+            this.error_show = false;
+            this.$bus.$emit('login_access',success)
+          } else {
+            this.login_error(success.body.msg)
+          }
         },error => {
           console.log(error)
           this.login_error(error)
@@ -283,19 +283,13 @@
           if( response.status === 'connected' ) {
             this.FB_login_item.access_token = response.authResponse.accessToken;
           }
-          this.$http.post('https://members.panmedia.asia/api/server/oauth/facebook',this.FB_login_item).then( success => {
-            this.error_show = false;
-            //get member profile
-            this.$http.get(
-              'https://members.panmedia.asia/api/v1/profile',
-              { headers: {
-                  Authorization: 'Bearer ' + success.body.message.access_token
-                }
-              }
-            ).then( res => {
-              console.log(res)
-              this.$bus.$emit('Oauth_login_access',res)
-            })
+          this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.FB_login_item,{emulateJSON: true}).then( success => {
+            if( success.body.success == true ) {
+              this.error_show = false;
+              this.$bus.$emit('login_access',success)
+            } else {
+              this.login_error(success.body.msg)
+            }
           },error => {
             this.login_error(error)
           })
@@ -309,19 +303,13 @@
           })
           auth2.attachClickHandler(this.$refs.google_login, {}, googleUser => {
             this.Google_login_item.access_token = googleUser.getAuthResponse().id_token;
-            this.$http.post('https://members.panmedia.asia/api/server/oauth/google',this.Google_login_item).then( success => {
-
-            this.error_show = false;
-            //get member profile
-            this.$http.get(
-              'https://members.panmedia.asia/api/v1/profile',
-              { headers: {
-                  Authorization: 'Bearer ' + success.body.message.access_token
-                }
+            this.$http.post('http://localhost/panmedia/panscifi-dev/console/member/signin',this.Google_login_item,{emulateJSON: true}).then( success => {
+              if( success.body.success == true ) {
+                this.error_show = false;
+                this.$bus.$emit('login_access',success)
+              } else {
+                this.login_error(success.body.msg)
               }
-              ).then( res => {
-                this.$bus.$emit('Oauth_login_access',res)
-              })
             },error =>{
               this.login_error(error)
             })

@@ -169,7 +169,6 @@ import Navbar from './Navbar.vue'
         if( (this.member_data.name && this.member_data.phone) != '' ) {
           this.$http.post('http://pansf-upload.panmedia.asia/console/member/update', this.member_data,{emulateJSON: true}).then(success => {
             if ( success.body.success == true ) {
-              console.log(success);
               this.success_show = true
               this.fill_in = true
               this.alert_text = '更新成功。'

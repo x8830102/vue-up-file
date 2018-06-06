@@ -135,6 +135,7 @@ class Member extends CI_Controller {
         $this->header_cross_domain();
 
 		$feedback = array('success' => false, 'email' => null, 'msg' => '');
+        $result_array = array('code' => 0);
 		if($para['identifier'] = $this->input->post('identifier', true))
 		{
 			$para['password'] = $this->input->post('password', true);
@@ -143,42 +144,57 @@ class Member extends CI_Controller {
 			$api = 'https://members.panmedia.asia/api/server/login';
 			$server_output = $this->curl_post($api, $para);
 			$result_array = json_decode($server_output, true);
-			if($result_array['code']==21 || $result_array['code']==22)
-			{
-				$authorization = $result_array['message']['access_token'];
-				$api_profile = 'https://members.panmedia.asia/api/v1/profile?fields=id,email,nickname';
-				$server_output = $this->curl_get($api_profile, $authorization);
-				$profile_result_array = json_decode($server_output, true);
-				if($profile_result_array['status']['code']==0)
-				{
-					$this->session->set_userdata('email', 'paku@panmedia.asia');
-					$feedback['email'] = $profile_result_array['user']['email'];
-                    $feedback['nickname'] = $profile_result_array['user']['nickname'];
-					$feedback['success'] = true;
-				}
-				else
-				{
-					$feedback['msg'] = $profile_result_array['status']['text'];
-				}
-			}
-			elseif($result_array['code']==41)
-			{
-				$feedback['msg'] = '這個帳號的信箱尚未通過驗證喔！';
-			}
-			elseif($result_array['code']==43)
-			{
-				$feedback['msg'] = '您輸入的信箱或密碼錯誤';
-			}
-			else
-			{
-				$feedback['msg'] = '登入資料驗證未通過';
-			}
-		}
+		} elseif ($this->input->post('provider', true) == 'facebook') {
+            $para['access_token'] = $this->input->post('access_token', true);
+            $para['client_id'] = PANMEDIA_MEMBER_CLIENT_ID;
+            $para['provider'] = $this->input->post('provider', true);
+            // call api
+            $api = 'https://members.panmedia.asia/api/server/oauth/facebook';
+            $server_output = $this->curl_post($api, $para);
+            $result_array = json_decode($server_output, true);
+        } elseif ($this->input->post('provider', true) == 'google') {
+            $para['access_token'] = $this->input->post('access_token', true);
+            $para['client_id'] = PANMEDIA_MEMBER_CLIENT_ID;
+            $para['provider'] = $this->input->post('provider', true);
+            // call api
+            $api = 'https://members.panmedia.asia/api/server/oauth/google';
+            $server_output = $this->curl_post($api, $para);
+            $result_array = json_decode($server_output, true);
+        }
 		else
 		{
 			$feedback['msg'] = 'PERMISSION DENY';
 		}
-
+        if(!empty($result_array) && ($result_array['code']==21 || $result_array['code']==22))
+        {
+            $authorization = $result_array['message']['access_token'];
+            $api_profile = 'https://members.panmedia.asia/api/v1/profile?fields=id,email,nickname';
+            $server_output = $this->curl_get($api_profile, $authorization);
+            $profile_result_array = json_decode($server_output, true);
+            if($profile_result_array['status']['code']==0)
+            {
+                $this->session->set_userdata('email', 'paku@panmedia.asia');
+                $feedback['email'] = $profile_result_array['user']['email'];
+                $feedback['nickname'] = $profile_result_array['user']['nickname'];
+                $feedback['success'] = true;
+            }
+            else
+            {
+                $feedback['msg'] = $profile_result_array['status']['text'];
+            }
+        }
+        elseif($result_array['code']==41)
+        {
+            $feedback['msg'] = '這個帳號的信箱尚未通過驗證喔！';
+        }
+        elseif($result_array['code']==43)
+        {
+            $feedback['msg'] = '您輸入的信箱或密碼錯誤';
+        }
+        else
+        {
+            $feedback['msg'] = '登入資料驗證未通過';
+        }
 		$this->ajax_feedback($feedback);
 	}
     

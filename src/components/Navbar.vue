@@ -56,17 +56,11 @@
       }
     },
     created() {
-      this.$bus.$on('pm_login_access', (msg) => {
+      this.$bus.$on('login_access', (msg) => {
         let expireDays = 1000 * 60 * 60 * 24 * 15;
         this.setCookie('username', msg.body.nickname, expireDays);
         this.setCookie('email', msg.body.email, expireDays);
         window.location = '/';
-      }),
-      this.$bus.$on('Oauth_login_access', (msg) => {
-        let expireDays = 1000 * 60 * 60 * 24 * 15;
-        this.setCookie('username', msg.body.user.nickname, expireDays);
-        this.setCookie('email', msg.body.user.email, expireDays);
-        window.location = '/'
       })
     },
     mounted() {
