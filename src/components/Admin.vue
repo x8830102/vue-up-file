@@ -28,6 +28,7 @@
                     <th>姓名</th>
                     <th>筆名</th>
                     <th>Email</th>
+                    <th>聯絡電話</th>
                     <th>投稿項目</th>
                     <th>檔案大小</th>
                     <th>作品</th>
@@ -43,6 +44,7 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.pan_name }}</td>
                         <td>{{ item.email }}</td>
+                        <td>{{ item.phone }}</td>
                         <td><span class='badge badge-secondary'>{{ novel_type(index) }}</span></td>
                         <td>{{ (item.novel_file_size /1024/1024).toFixed(1) }} MB</td>
                         <td><a :href="item.novel_file_name" :download="item.novel_no + '-作品'"  class="btn btn-primary">下載</a></td>

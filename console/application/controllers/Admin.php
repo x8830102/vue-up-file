@@ -43,6 +43,7 @@ class Admin extends CI_Controller
                 $_n['name'] = $_l['name'];
                 $_n['pan_name'] = $_l['pan_name'];
                 $_n['email'] = $_l['email'];
+                $_n['phone'] = $_l['phone'];
                 $_n['novel_type'] = $_l['novel_type'];
                 $_n['novel_file_size'] = $_l['novel_file_size'];
                 $_n['novel_file_name'] = $_l['novel_file_name'];
