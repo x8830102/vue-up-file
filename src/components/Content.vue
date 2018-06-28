@@ -156,13 +156,13 @@
             </transition>
             <div class="form-check mt-2 form-check-inline form-control-lg">
               <ul>
-                <li @click="redio_toggle('login')">
-                  <input class="form-check-input" type="radio" id="login" value="on" checked="checked" name="mode">
-                  <label class="form-check-label" for="login">登入</label>
-                </li>
                 <li @click="redio_toggle('reg')">
                   <input class="form-check-input" type="radio" id="reg" value="on" name="mode">
                   <label class="form-check-label" for="reg">註冊</label>
+                </li>
+                <li @click="redio_toggle('login')">
+                  <input class="form-check-input" type="radio" id="login" value="on" checked="checked" name="mode">
+                  <label class="form-check-label" for="login">登入</label>
                 </li>
               </ul>
             </div>
@@ -178,9 +178,9 @@
                 <div class="form-group">
                   <input type="email" v-model:value="register_item.email" class="form-control" placeholder="* E-mail"> </div>
                 <div class="form-group">
-                  <input type="password" v-model:value="register_item.password" class="form-control" placeholder="* 密碼"> </div>
+                  <input type="password" v-model:value="register_item.password" class="form-control" placeholder="* 設定密碼"> </div>
                 <div class="form-group">
-                  <input type="password" v-model:value="register_item.password2" class="form-control" placeholder="* 再次輸入密碼"> </div>
+                  <input type="password" v-model:value="register_item.password2" class="form-control" placeholder="* 再次輸入設定密碼"> </div>
                 <button type="button" @click="register" class="btn btn-block btn-primary">註冊</button>
               </form>
               <ul class="list-inline">
