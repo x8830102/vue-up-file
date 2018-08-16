@@ -164,7 +164,9 @@
               <p class="m-0 p-5" style="text-align: left">兩種獎項可同時參加，各以投稿一篇為限，上傳作品檔案前，請謹慎確認。也請注意上傳的檔案格式：
                 <br>1. 上傳作品 (上傳 docx 檔，檔案大小不得超過 10 MB)&nbsp;
                 <br>2. 上傳已簽署之同意書 (上傳 pdf 或 jpg,png,tif 等圖片檔，
-                同意書下載： <a href="/console/assets/file/agreement530.docx" download="同意書">word檔</a>、<a href="/console/assets/file/agreement530.pdf" download="同意書">pdf檔</a>)</p>
+                同意書下載： <a href="/console/assets/file/agreement530.docx" download="同意書">word檔</a>、<a href="/console/assets/file/agreement530.pdf" download="同意書">pdf檔</a>)
+                <br>3. 大陸地區參賽者，請鏈結雲盤空間下載同意書。<a href="http://u.163.com/2tGvDsst" target="_blank">docx 格式檔案下載連結</a> (提取碼: rIFMqRmg)；<a href="http://u.163.com/8ufdE8Ok" target="_blank">pdf 格式檔案下載連結</a> (提取碼: 0P3qMaiW)。
+              </p>
               <div class="row">
                 <div class="col-md-12 text-center">
                   <table class="table text-center">
